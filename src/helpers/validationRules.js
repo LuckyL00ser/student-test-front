@@ -25,13 +25,6 @@ extend("file_type", {
     value.name.endsWith(type)
 });
 
-extend("phone", {
-  message: input => "Podaj poprawny numer telefonu",
-  validate: value =>
-    // eslint-disable-next-line no-useless-escape
-    String(value).match(/\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{3})/)
-});
-
 extend("email", {
   ...email,
   message: "Podaj poprawny adres e-mail"

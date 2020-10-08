@@ -6,7 +6,11 @@
           <h3>Zaloguj się</h3>
           <ValidationObserver v-slot="{ handleSubmit }" ref="form">
             <b-form @submit.prevent="handleSubmit(login)">
-              <ValidationProvider rules="email" class="flex-grow-1" v-slot="vContext">
+              <ValidationProvider
+                rules="email"
+                class="flex-grow-1"
+                v-slot="vContext"
+              >
                 <b-form-group label="E-mail">
                   <b-form-input v-model="loginData.email" name="email" />
                   <CustomInvalidFeedback :validationContext="vContext" />
@@ -62,7 +66,7 @@ export default {
         this.$router.push("/");
         this.toast("info", "Zalogowano");
       } catch (e) {
-        console.error(e)
+        console.error(e);
       }
       this.loggingIn = false;
     }
