@@ -1,13 +1,13 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> |
-      <router-link to="/login">Login</router-link> |
-      <router-link to="/notfound">404</router-link>
+  <main id="app">
+    <Navbar />
+    <div class="container">
+      <router-view/>
     </div>
-    <router-view />
-  </div>
+    <footer>
+      stopka
+    </footer>
+  </main>
 </template>
 
 <style>
@@ -32,3 +32,9 @@
   color: #42b983;
 }
 </style>
+<script>
+  import Navbar from "./components/Navbar";
+  export default {
+    components: {Navbar}
+  }
+</script>

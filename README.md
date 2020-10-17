@@ -1,6 +1,4 @@
-# vue-starter
-
-## Project setup
+# student-test-front
 ```
 npm install
 ```
