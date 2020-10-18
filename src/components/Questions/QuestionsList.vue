@@ -1,0 +1,66 @@
+<template>
+	<b-table striped responsive="true" hover :items="questions" :fields="fields">
+		<template v-slot:cell(actions)="data">
+			<router-link
+				:to="{ name: 'EditQuestion', params: { questionID: data.item.id } }"
+				>Edytuj</router-link
+			>
+			<b-btn @click="deleteQuestion(data.item.id)">Usuń</b-btn>
+		</template>
+		<template v-slot:table-busy>
+			<Loader :loading="loading" />
+		</template>
+	</b-table>
+</template>
+
+<script>
+import Loader from '../common/Loader';
+export default {
+	name: 'QuestionsList',
+	components: { Loader },
+	props: ['questions', 'loading', 'isTestRated'],
+	data() {
+		return {
+			fields: [
+				{
+					label: 'Pytanie',
+					key: 'name',
+					sortable: true,
+				},
+				{
+					label: 'Rodzaj pytania',
+					key: 'type',
+					sortable: true,
+				},
+				{
+					label: 'Liczba punktow',
+					key: 'points',
+				},
+				this.isTestRated
+					? {
+							label: 'Zdobyte punkty',
+							key: 'score',
+					  }
+					: {
+							label: 'Akcje',
+							key: 'actions',
+					  },
+			],
+		};
+	},
+	methods: {
+		async deleteQuestion(id) {
+			//TODO: id pyatnia jako argument
+			try {
+				// await questionAPI.deleteQuestion(id);
+				this.$store.toast('success', 'Usunięto pytanie');
+				this.$emit('questionDeleted', id);
+			} catch (e) {
+				this.$store.toast('danger', 'Niepowodzenie ususwania pyatania' + e);
+			}
+		},
+	},
+};
+</script>
+
+<style scoped></style>

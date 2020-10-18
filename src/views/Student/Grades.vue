@@ -1,13 +1,13 @@
 <template>
-
+	<div>
+		moje oceny
+	</div>
 </template>
 
 <script>
-    export default {
-        name: "Grades"
-    }
+export default {
+	name: 'Grades',
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
