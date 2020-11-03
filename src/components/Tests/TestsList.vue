@@ -1,5 +1,5 @@
 <template>
-	<b-table striped responsive="true" hover :items="data" :fields="fields">
+	<b-table striped responsive="true" hover :items="data" :fields="fields"  :busy="loading">
 		<template v-slot:cell(actions)="data">
 			<slot name="actions" :data="data"> </slot>
 		</template>

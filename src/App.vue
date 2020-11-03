@@ -8,12 +8,12 @@
 			<b-container>
 				<b-row>
 					<b-col>
-						<h2>stopka</h2>
+						<h2>Aplikacja StudentTest</h2>
 					</b-col>
 					<b-col>
-						<a href="mailto:xyz@gmail.com">mail 1</a>
+						<a href="mailto:xyz@gmail.com">Mail kontaktowy 1 </a>
 						<br />
-						<a href="mailto:abc@gmail.com">mail 2</a>
+						<a href="mailto:abc@gmail.com">Mail kontaktowy 2</a>
 					</b-col>
 				</b-row>
 			</b-container>
@@ -33,6 +33,7 @@
 }
 #app .container {
 	flex-grow: 1;
+	padding-top: 30px;
 }
 footer {
 	text-align: center;

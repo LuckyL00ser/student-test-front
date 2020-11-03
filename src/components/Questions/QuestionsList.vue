@@ -1,5 +1,5 @@
 <template>
-	<b-table striped responsive="true" hover :items="questions" :fields="fields">
+	<b-table striped responsive="true" hover :items="questions" :fields="fields"  :busy="loading">
 		<template v-slot:cell(actions)="data">
 			<router-link
 				:to="{ name: 'EditQuestion', params: { questionID: data.item.id } }"

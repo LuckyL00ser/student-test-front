@@ -1,42 +1,56 @@
-import { axios, setCredentials } from './axiosConfig';
+import { axios } from './axiosConfig';
+//import {signin} from '@/api/authAPI';
 
-async function login(credentials) {
-	try {
-		await setCredentials();
-		const data = await axios.post('/api/auth/login', credentials);
-		return data;
-	} catch (e) {
-		console.error(e);
-	}
-}
+// async function login(credentials) {
+// 	try {
+// 		const response = await signin(credentials);
+// 		await setCredentials(response.data.jwt);
+// 		return response.data;
+// 	} catch (e) {
+// 		console.error(e);
+// 	}
+// }
 function logout() {
 	return axios.post('/api/auth/logout');
 }
 function getUser() {
-	return JSON.parse(sessionStorage.getItem('user'));
+	return JSON.parse(localStorage.getItem('user'));
 }
-function setLocalStorageUser(user) {
-	if (user) {
-		sessionStorage.setItem('user', JSON.stringify(user));
+function getJwt() {
+	return JSON.parse(localStorage.getItem('jwt'));
+}
+function setLocalStorage(user,jwt) {
+	if (user && jwt) {
+		localStorage.setItem('user', JSON.stringify(user));
+		localStorage.setItem('jwt', JSON.stringify(jwt));
 	}
 }
-function removeUserFromStorage() {
-	sessionStorage.removeItem('user');
+function removeFromLocalStorage() {
+	localStorage.removeItem('user');
+	localStorage.removeItem('jwt');
 }
 async function initializationUserAuthentication(store) {
-	if (getUser()) {
-		const data = getUser();
-		return store.dispatch('authorize', data);
+	let user = null;
+	let jwt = null;
+	if (getJwt()) {
+		jwt = getJwt();
+	}else{
+		removeFromLocalStorage()
+		return false;
 	}
-	return false;
+	if (getUser()) {
+		user = getUser();
+	}
+	return store.dispatch('authorize', {jwt,...user});
 }
 
 export {
-	login,
+	//login,
 	// register,
 	logout,
-	removeUserFromStorage,
+	removeFromLocalStorage,
 	initializationUserAuthentication,
 	getUser,
-	setLocalStorageUser,
+	getJwt,
+	setLocalStorage,
 };

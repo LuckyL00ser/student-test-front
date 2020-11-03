@@ -15,6 +15,14 @@ import EditQuestion from '../views/Teacher/EditQuestion';
 import EditTest from '../views/Teacher/EditTest';
 import Questions from '../views/Teacher/Questions';
 import Results from '../views/Teacher/Results';
+import Groups from '../views/Shared/Groups';
+import Subjects from '../views/Shared/Subjects';
+import AddSubject from '../views/Teacher/AddSubject';
+import EditSubject from '../views/Teacher/EditSubject';
+import SubjectDetails from '../views/Shared/SubjectDetails';
+import GroupDetails from '../views/Shared/GroupDetails';
+import AddGroup from '../views/Teacher/AddGroup';
+import EditGroup from '../views/Teacher/EditGroup';
 
 //Shared:
 
@@ -44,6 +52,38 @@ const routes = [
 		path: '/tests/ready-to-rate',
 		name: 'TestsReadyToRate',
 		component: TestsReadyToRate,
+		meta: {
+			requiresAuth: true,
+		},
+	},
+	{
+		path: '/subjects',
+		name: 'Subjects',
+		component: Subjects,
+		meta: {
+			requiresAuth: true,
+		},
+	},
+	{
+		path: '/subjects/:subjectID',
+		name: 'SubjectDetails',
+		component: SubjectDetails,
+		meta: {
+			requiresAuth: true,
+		},
+	},
+	{
+		path: '/groups',
+		name: 'Groups',
+		component: Groups,
+		meta: {
+			requiresAuth: true,
+		},
+	},
+	{
+		path: '/groups/:groupID',
+		name: 'GroupDetails',
+		component: GroupDetails,
 		meta: {
 			requiresAuth: true,
 		},
@@ -112,6 +152,60 @@ const routes = [
 			requiresTeacher: true,
 		},
 	},
+	{
+		path: '/teacher-groups/:teacherID',
+		name: 'TeacherGroups',
+		component: Groups,
+		meta: {
+			requiresAuth: true,
+			requiresTeacher: true,
+		},
+	},
+	{
+		path: '/teacher-subjects/:teacherID',
+		name: 'TeacherSubjects',
+		component: Subjects,
+		meta: {
+			requiresAuth: true,
+			requiresTeacher: true,
+		},
+	},
+	{
+		path: '/subjects/new',
+		name: 'AddSubject',
+		component: AddSubject,
+		meta: {
+			requiresAuth: true,
+			requiresTeacher: true,
+		},
+	},
+	{
+		path: '/subjects/:subjectID/edit',
+		name: 'EditSubject',
+		component: EditSubject,
+		meta: {
+			requiresAuth: true,
+			requiresTeacher: true,
+		},
+	},
+	{
+		path: '/groups/new',
+		name: 'AddGroup',
+		component: AddGroup,
+		meta: {
+			requiresAuth: true,
+			requiresTeacher: true,
+		},
+	},
+	{
+		path: '/groups/:groupID/edit',
+		name: 'EditGroup',
+		component: EditGroup,
+		meta: {
+			requiresAuth: true,
+			requiresTeacher: true,
+		},
+	},
 
 	//Student Routes:
 	{
@@ -127,6 +221,24 @@ const routes = [
 		path: '/grades',
 		name: 'Grades',
 		component: Grades,
+		meta: {
+			requiresAuth: true,
+			requiresStudent: true,
+		},
+	},
+	{
+		path: '/user-groups/:userID',
+		name: 'UserGroups',
+		component: Groups,
+		meta: {
+			requiresAuth: true,
+			requiresStudent: true,
+		},
+	},
+	{
+		path: '/student-subjects/:userID',
+		name: 'StudentSubjects',
+		component: Subjects,
 		meta: {
 			requiresAuth: true,
 			requiresStudent: true,

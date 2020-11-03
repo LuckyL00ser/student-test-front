@@ -1,10 +1,10 @@
 import axios from 'axios';
 
 axios.defaults.baseURL =
-	process.env.NODE_ENV === 'production' ? '/' : 'http://localhost:8000';
+	process.env.NODE_ENV === 'production' ? '/' : 'https://quiz-server-prz.herokuapp.com/';
 
-axios.defaults.withCredentials = true;
-async function setCredentials() {
+async function setCredentials(jwt) {
+	axios.defaults.headers.common = {'Authorization': `Bearer ${jwt}`}
 	// try {
 	//   await axios.get("/sanctum/csrf-cookie");
 	// } catch (e) {

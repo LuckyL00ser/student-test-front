@@ -13,9 +13,12 @@
 				>
 					{{ route.name }}
 				</b-nav-item>
-				<b-btn v-if="$store.getters.isLoggedIn" @click="logout">
-					Wyloguj
-				</b-btn>
+				<template v-if="$store.getters.isLoggedIn">
+					<b-btn  @click="logout">
+						Wyloguj
+					</b-btn>
+				</template>
+
 			</b-navbar-nav>
 		</b-collapse>
 	</b-navbar>
@@ -38,25 +41,49 @@ export default {
 			],
 			adminRoutes: [],
 			teacherRoutes: [
-				{
-					name: 'Pytania',
-					route: { name: 'Questions' },
-				},
+				// {
+				// 	name: 'Pytania',
+				// 	route: { name: 'Questions' },
+				// },
 				{
 					name: 'Wyniki',
 					route: { name: 'Results' },
 				},
+				// {
+				// 	name: 'Grupy',
+				// 	route: { name: 'TeacherGroups',params: {teacherID:this.$store.state.user.id} },
+				// },
+				// {
+				// 	name: 'Przedmioty',
+				// 	route: { name: 'TeacherSubjects',params: {teacherID:this.$store.state.user.id} },
+				// },
 			],
 			studentRoutes: [
 				{
 					name: 'Oceny',
 					route: { name: 'Grades' },
 				},
+				// {
+				// 	name: 'Grupy',
+				// 	route: { name: 'UserGroups',params: {userID:this.$store.state.user.id} },
+				// },
+				// {
+				// 	name: 'Przedmioty',
+				// 	route: { name: 'StudentSubjects',params: {userID:this.$store.state.user.id} },
+				// },
 			],
 			sharedTeacherStudentRoutes: [
 				{
 					name: 'Testy',
 					route: { name: 'Tests' },
+				},
+				{
+					name: 'Przedmioty',
+					route: { name: 'Subjects' },
+				},
+				{
+					name: 'Grupy',
+					route: { name: 'Groups' },
 				},
 				{
 					name: 'Do oceny',
@@ -68,12 +95,12 @@ export default {
 	computed: {
 		currentRoutes() {
 			if (this.$store.getters.isLoggedIn) {
-				switch (this.$store.state.user.role) {
-					case 'admin':
+				switch (this.$store.getters.userRole) {
+					case 'ROLE_ADMIN':
 						return this.adminRoutes;
-					case 'teacher':
+					case 'ROLE_TEACHER':
 						return [...this.teacherRoutes, ...this.sharedTeacherStudentRoutes];
-					case 'student':
+					case 'ROLE_USER':
 						return [...this.studentRoutes, ...this.sharedTeacherStudentRoutes];
 				}
 			}

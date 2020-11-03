@@ -5,16 +5,10 @@
 				<h3>Zaloguj się</h3>
 				<ValidationObserver v-slot="{ handleSubmit }" ref="form">
 					<b-form @submit.prevent="handleSubmit(login)">
-						<ValidationProvider
-							v-slot="vContext"
-							rules="email"
-							class="flex-grow-1"
-						>
-							<b-form-group label="E-mail">
-								<b-form-input v-model="loginData.email" name="email" />
-								<CustomInvalidFeedback :validation-context="vContext" />
+
+							<b-form-group label="Login">
+								<b-form-input v-model="loginData.login" name="login" />
 							</b-form-group>
-						</ValidationProvider>
 						<ValidationProvider rules="required" class="flex-grow-1">
 							<b-form-group label="Hasło">
 								<b-form-input
@@ -43,15 +37,13 @@
 </template>
 
 <script>
-import CustomInvalidFeedback from '../components/common/CustomInvalidFeedback';
 export default {
 	name: 'Login',
-	components: { CustomInvalidFeedback },
 	data() {
 		return {
 			loggingIn: false,
 			loginData: {
-				email: '',
+				login: '',
 				password: '',
 			},
 		};

@@ -20,3 +20,5 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+example login data:
+{"email":"quiz@test.pl","login":"quiz","name":"Karol","lastname":"Wiater","password":"testowe"}
