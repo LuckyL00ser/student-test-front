@@ -144,7 +144,7 @@ const routes = [
 		},
 	},
 	{
-		path: '/questions/:questionID',
+		path: '/tests/:testID/questions/:questionID',
 		name: 'EditQuestion',
 		component: EditQuestion,
 		meta: {

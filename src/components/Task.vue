@@ -83,12 +83,12 @@ export default {
 			this.getTask();
 		}
 		if(this.testID)
-			this.data.task.testId = this.testID;
+			this.task.testId = this.testID;
 	},
 	methods: {
 		async getTask() {
 			const response = await TaskAPI.getTask(this.TaskId);
-			this.data.task = response.data
+			this.task = response.data
 		},
 		async submit(){
 			try{
