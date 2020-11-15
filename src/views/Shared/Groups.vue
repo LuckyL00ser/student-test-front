@@ -11,7 +11,9 @@
 		</router-link>
 		<SubjectsList :data="subjects">
 			<template v-slot:actions="{ data }">
-				<router-link :to="{name:'GroupDetails',params: {groupID:data.item.id}}">
+				<router-link
+					:to="{ name: 'GroupDetails', params: { groupID: data.item.id } }"
+				>
 					Szczegóły
 				</router-link>
 				<template v-if="$store.getters.userRole == 'ROLE_TEACHER'">
@@ -20,10 +22,9 @@
 						>Edytuj
 					</router-link>
 					<b-btn variant="danger" @click="deleteGroup(data.item.id)"
-					>Usuń</b-btn
+						>Usuń</b-btn
 					>
 				</template>
-
 			</template>
 		</SubjectsList>
 	</div>
@@ -31,7 +32,12 @@
 
 <script>
 import SubjectsList from '../../components/Subjects/SubjectsList';
-import { deleteGroup, getAllGroups, getStudentGroups, getTeacherGroups } from '../../api/groupAPI';
+import {
+	deleteGroup,
+	getAllGroups,
+	getStudentGroups,
+	getTeacherGroups,
+} from '../../api/groupAPI';
 
 export default {
 	name: 'Groups',
@@ -67,7 +73,7 @@ export default {
 			this.loading = true;
 			try {
 				await deleteGroup(id);
-				this.$store.toast('info','Usunięto');
+				this.$store.toast('info', 'Usunięto');
 				this.getSubjects();
 			} catch (e) {
 				this.$store.toast('error', e);

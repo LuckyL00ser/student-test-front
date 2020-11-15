@@ -1,18 +1,7 @@
 <template>
 	<b-container fluid>
 		<b-row class="mt-2">
-			<b-col sm="2">
-				<label for="txt-question" class="float-left">Pytanie:</label>
-			</b-col>
-			<b-col>
-				<input
-					id="txt-question"
-					v-model="question"
-					placeholder="Pytanie..."
-					class="col-12"
-				/>
-			</b-col>
-			<b-col sm="2">
+			<b-col lg="12">
 				<b-button class="btn btn-success float-right" @click="addQuestion()">
 					Dodaj odpowiedź
 				</b-button>
@@ -46,16 +35,27 @@
 </template>
 
 <script>
+import * as TaskAPI from '@/api/taskAPI';
+
 export default {
 	name: 'MultipleChoiceQuestion',
+	props: ['TaskId'],
 	data: function() {
 		return {
-			question: '',
 			answers: [''],
 			isCorrect: [false],
 		};
 	},
+	created() {
+		// if(this.TaskId != null) {
+		// 	const request = this.getTask();
+		// }
+	},
 	methods: {
+		async getTask() {
+			return await TaskAPI.getTask(this.TaskId);
+		},
+
 		addQuestion() {
 			this.answers.push('');
 			this.isCorrect.push(false);

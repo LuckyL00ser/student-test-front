@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<h1>Dodaj przedmiot</h1>
-		<SubjectForm/>
+		<SubjectForm />
 	</div>
 </template>
 

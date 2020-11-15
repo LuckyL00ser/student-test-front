@@ -6,35 +6,31 @@
 					<h3>Zarejestruj się</h3>
 					<ValidationObserver v-slot="{ handleSubmit }" ref="form">
 						<b-form @submit.prevent="handleSubmit(login)">
-						<b-form-row>
-							<b-col>
-
-								<ValidationProvider
-										v-slot="vContext"
-										rules="required"
-								>
-									<b-form-group label="Imię">
-										<b-form-input v-model="loginData.name" name="name" />
-										<CustomInvalidFeedback :validation-context="vContext" />
-									</b-form-group>
-								</ValidationProvider>
-							</b-col>
-							<b-col>
-								<ValidationProvider
-										v-slot="vContext"
-										rules="required"
-								>
-									<b-form-group label="Nazwisko">
-										<b-form-input v-model="loginData.lastname" name="lastname"/>
-										<CustomInvalidFeedback :validation-context="vContext"/>
-									</b-form-group>
-								</ValidationProvider>
-							</b-col>
-						</b-form-row>
+							<b-form-row>
+								<b-col>
+									<ValidationProvider v-slot="vContext" rules="required">
+										<b-form-group label="Imię">
+											<b-form-input v-model="loginData.name" name="name" />
+											<CustomInvalidFeedback :validation-context="vContext" />
+										</b-form-group>
+									</ValidationProvider>
+								</b-col>
+								<b-col>
+									<ValidationProvider v-slot="vContext" rules="required">
+										<b-form-group label="Nazwisko">
+											<b-form-input
+												v-model="loginData.lastname"
+												name="lastname"
+											/>
+											<CustomInvalidFeedback :validation-context="vContext" />
+										</b-form-group>
+									</ValidationProvider>
+								</b-col>
+							</b-form-row>
 							<ValidationProvider
-									v-slot="vContext"
-									rules="required"
-									class="flex-grow-1"
+								v-slot="vContext"
+								rules="required"
+								class="flex-grow-1"
 							>
 								<b-form-group label="Kierunek">
 									<b-form-input v-model="loginData.major" name="login" />
@@ -42,9 +38,9 @@
 								</b-form-group>
 							</ValidationProvider>
 							<ValidationProvider
-									v-slot="vContext"
-									rules="required"
-									class="flex-grow-1"
+								v-slot="vContext"
+								rules="required"
+								class="flex-grow-1"
 							>
 								<b-form-group label="Wydział">
 									<b-form-input v-model="loginData.department" name="login" />
@@ -52,9 +48,9 @@
 								</b-form-group>
 							</ValidationProvider>
 							<ValidationProvider
-									v-slot="vContext"
-									rules="required"
-									class="flex-grow-1"
+								v-slot="vContext"
+								rules="required"
+								class="flex-grow-1"
 							>
 								<b-form-group label="Stopień">
 									<b-form-input v-model="loginData.degree" name="login" />
@@ -62,9 +58,9 @@
 								</b-form-group>
 							</ValidationProvider>
 							<ValidationProvider
-									v-slot="vContext"
-									rules="required|min:4"
-									class="flex-grow-1"
+								v-slot="vContext"
+								rules="required|min:4"
+								class="flex-grow-1"
 							>
 								<b-form-group label="Login">
 									<b-form-input v-model="loginData.login" name="login" />
@@ -132,7 +128,7 @@ export default {
 		async login() {
 			try {
 				this.registering = true;
-				await signup(this.loginData)
+				await signup(this.loginData);
 				this.$router.push({ name: 'Login' });
 				this.$store.toast('info', 'Zarejestrowano');
 			} catch (e) {

@@ -5,10 +5,9 @@
 				<h3>Zaloguj się</h3>
 				<ValidationObserver v-slot="{ handleSubmit }" ref="form">
 					<b-form @submit.prevent="handleSubmit(login)">
-
-							<b-form-group label="Login">
-								<b-form-input v-model="loginData.login" name="login" />
-							</b-form-group>
+						<b-form-group label="Login">
+							<b-form-input v-model="loginData.login" name="login" />
+						</b-form-group>
 						<ValidationProvider rules="required" class="flex-grow-1">
 							<b-form-group label="Hasło">
 								<b-form-input

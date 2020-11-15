@@ -19,7 +19,7 @@ function getUser() {
 function getJwt() {
 	return JSON.parse(localStorage.getItem('jwt'));
 }
-function setLocalStorage(user,jwt) {
+function setLocalStorage(user, jwt) {
 	if (user && jwt) {
 		localStorage.setItem('user', JSON.stringify(user));
 		localStorage.setItem('jwt', JSON.stringify(jwt));
@@ -34,14 +34,14 @@ async function initializationUserAuthentication(store) {
 	let jwt = null;
 	if (getJwt()) {
 		jwt = getJwt();
-	}else{
-		removeFromLocalStorage()
+	} else {
+		removeFromLocalStorage();
 		return false;
 	}
 	if (getUser()) {
 		user = getUser();
 	}
-	return store.dispatch('authorize', {jwt,...user});
+	return store.dispatch('authorize', { jwt, ...user });
 }
 
 export {

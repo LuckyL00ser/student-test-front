@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<h1>{{title}}</h1>
+		<h1>{{ title }}</h1>
 		<router-link
 			v-if="$store.getters.userRole == 'ROLE_TEACHER'"
 			tag="button"
@@ -11,7 +11,9 @@
 		</router-link>
 		<SubjectsList :data="subjects">
 			<template v-slot:actions="{ data }">
-				<router-link :to="{name:'SubjectDetails',params: {subjectID:data.item.id}}">
+				<router-link
+					:to="{ name: 'SubjectDetails', params: { subjectID: data.item.id } }"
+				>
 					Szczegóły
 				</router-link>
 				<template v-if="$store.getters.userRole == 'ROLE_TEACHER'">
@@ -19,9 +21,10 @@
 						:to="{ name: 'EditSubject', params: { subjectID: data.item.id } }"
 						>Edytuj
 					</router-link>
-					<b-btn variant="danger" @click="deleteSubject(data.item.id)">Usuń</b-btn>
+					<b-btn variant="danger" @click="deleteSubject(data.item.id)"
+						>Usuń</b-btn
+					>
 				</template>
-
 			</template>
 		</SubjectsList>
 	</div>
@@ -30,7 +33,8 @@
 <script>
 import SubjectsList from '../../components/Subjects/SubjectsList';
 import {
-	deleteSubject, getAllSubjects,
+	deleteSubject,
+	getAllSubjects,
 	getStudentSubjects,
 	getTeacherSubjects,
 } from '../../api/subjectAPI';
@@ -41,8 +45,7 @@ export default {
 		return {
 			subjects: [],
 			loading: true,
-			extraFields: {
-			},
+			extraFields: {},
 		};
 	},
 	mounted() {
@@ -55,10 +58,9 @@ export default {
 				let response = null;
 				if (this.$route.name == 'StudentSubjects')
 					response = await getStudentSubjects(this.$store.state.user.id);
-				else if(this.$route.name == 'TeacherSubjects')
-					 response = await getTeacherSubjects(this.$store.state.user.id);
-				else
-					response = await getAllSubjects();
+				else if (this.$route.name == 'TeacherSubjects')
+					response = await getTeacherSubjects(this.$store.state.user.id);
+				else response = await getAllSubjects();
 
 				this.subjects = response.data;
 			} catch (e) {
@@ -70,7 +72,7 @@ export default {
 			this.loading = true;
 			try {
 				await deleteSubject(id);
-				this.$store.toast('info','Usunięto');
+				this.$store.toast('info', 'Usunięto');
 				this.getSubjects();
 			} catch (e) {
 				this.$store.toast('error', e);
@@ -86,7 +88,7 @@ export default {
 				case 'TeacherSubjects':
 					return 'Przedmioty wykładowcy';
 				case 'Subjects':
-					return 'Wszystkie przedmioty'
+					return 'Wszystkie przedmioty';
 				default:
 					return null;
 			}

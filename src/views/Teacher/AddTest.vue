@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<h1>Stwórz nowy test</h1>
-		<TestForm/>
+		<TestForm />
 	</div>
 </template>
 

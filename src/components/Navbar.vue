@@ -14,11 +14,10 @@
 					{{ route.name }}
 				</b-nav-item>
 				<template v-if="$store.getters.isLoggedIn">
-					<b-btn  @click="logout">
+					<b-btn @click="logout">
 						Wyloguj
 					</b-btn>
 				</template>
-
 			</b-navbar-nav>
 		</b-collapse>
 	</b-navbar>
