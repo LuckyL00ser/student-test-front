@@ -89,6 +89,10 @@ export default {
 					name: 'Do oceny',
 					route: { name: 'TestsReadyToRate' },
 				},
+				{
+					name: 'User-group-subjects',
+					route: { name: 'UserGroupSubjects' },
+				},
 			],
 		};
 	},

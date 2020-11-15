@@ -4,37 +4,29 @@
 			<b-form @submit.prevent="handleSubmit(submit)">
 				<ValidationProvider rules="required" class="flex-grow-1"
 									v-slot="vContext">
-					<b-form-group label="Nazwa">
-						<b-form-input
-							v-model="form.name"
-							type="text"
-							name="text"
-						/>
-
-						<CustomInvalidFeedback :validation-context="vContext" />
-					</b-form-group>
-				</ValidationProvider>
-				<ValidationProvider rules="required|numeric" class="flex-grow-1"
-									v-slot="vContext">
-					<b-form-group label="Ilość punktów do zdobycia">
-						<b-form-spinbutton  v-model="form.fullPoints" min="1" ></b-form-spinbutton>
-
-						<CustomInvalidFeedback :validation-context="vContext" />
-					</b-form-group>
-				</ValidationProvider>
-				<ValidationProvider rules="required|numeric" class="flex-grow-1"
-									v-slot="vContext">
-					<b-form-group label="Czas na wypełnienie (minuty)">
-						<b-form-spinbutton  v-model="form.time" :min="1" :max="100"></b-form-spinbutton>
-
+					<b-form-group label="Przedmiot">
+						<SubjectSelector v-model="form.subjectBySubjectId"/>
 						<CustomInvalidFeedback :validation-context="vContext" />
 					</b-form-group>
 				</ValidationProvider>
 				<ValidationProvider rules="required" class="flex-grow-1"
 									v-slot="vContext">
-					<b-form-group label="Przedmiot">
-						<SubjectSelector v-model="form.subjectBySubjectId"/>
-
+					<b-form-group label="Grupa">
+						<GroupSelector :teacher="false" v-model="form.groupByGroupId"/>
+						<CustomInvalidFeedback :validation-context="vContext" />
+					</b-form-group>
+				</ValidationProvider>
+				<ValidationProvider rules="required" class="flex-grow-1"
+									v-slot="vContext">
+					<b-form-group label="Nauczyciel">
+						<UserSelector :teachers="true" v-model="form.userByTeacherId"/>
+						<CustomInvalidFeedback :validation-context="vContext" />
+					</b-form-group>
+				</ValidationProvider>
+				<ValidationProvider rules="required" class="flex-grow-1"
+									v-slot="vContext">
+					<b-form-group label="Student">
+						<UserSelector v-model="form.userByUserId"/>
 						<CustomInvalidFeedback :validation-context="vContext" />
 					</b-form-group>
 				</ValidationProvider>
@@ -45,7 +37,7 @@
 						:disabled="loading"
 						class="shadow"
 						type="submit"
-						>{{testID?'Zapisz':'Dodaj'}}
+						>{{userGroupSubjectId?'Zapisz':'Dodaj'}}
 					</b-btn>
 				</div>
 			</b-form>
@@ -54,29 +46,31 @@
 </template>
 
 <script>
-import * as testAPI from '@/api/testAPI'
+import * as userGroupSubjectAPI from '@/api/userGroupSubjectAPI'
 import CustomInvalidFeedback from '../common/CustomInvalidFeedback';
 import SubjectSelector from '../Subjects/SubjectSelector';
+import GroupSelector from '../Groups/GroupSelector';
+import UserSelector from '../User/UserSelector';
 
 export default {
-	name: 'TestForm',
-	components: { SubjectSelector, CustomInvalidFeedback },
-	props: ['testID'],
+	name: 'UserGroupSubjectForm',
+	components: { UserSelector, GroupSelector, SubjectSelector, CustomInvalidFeedback },
+	props: ['userGroupSubjectId'],
 	data() {
 		return {
 			loading: false,
-			form: {},
+			form: {	},
 		};
 	},
 	mounted() {
-		if(this.testID)
-			this.getTest()
+		if(this.userGroupSubjectId)
+			this.getUserGroupSubjectId()
 	},
 	methods: {
-		async getTest(){
+		async getUserGroupSubjectId(){
 			this.loading =true;
 			try{
-				const response = await testAPI.getTest(this.groupID);
+				const response = await userGroupSubjectAPI.getAllUserGroupSubjects(this.userGroupSubjectId);
 				this.form = response.data;
 			}
 			catch(e){
@@ -87,10 +81,10 @@ export default {
 		async submit(){
 			this.loading = true;
 			try {
-				if(this.testID)
-					await testAPI.updateTest(this.groupID,this.form)
+				if(this.userGroupSubjectId)
+					await userGroupSubjectAPI.update(this.userGroupSubjectId,this.form)
 				else
-					await testAPI.createTest(this.form)
+					await userGroupSubjectAPI.create(this.form)
 				this.$store.toast('success','Zapisano zmiany');
 				this.$router.back();
             }

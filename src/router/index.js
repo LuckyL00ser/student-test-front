@@ -23,6 +23,10 @@ import SubjectDetails from '../views/Shared/SubjectDetails';
 import GroupDetails from '../views/Shared/GroupDetails';
 import AddGroup from '../views/Teacher/AddGroup';
 import EditGroup from '../views/Teacher/EditGroup';
+import UserGroupSubjectDetails from '../views/Shared/UserGroupSubjectDetails';
+import AddUserGroupSubject from '../views/Shared/AddUserGroupSubject';
+import UserGroupSubjects from '../views/Shared/UserGroupSubjects';
+import EditUserGroupSubject from '../views/Shared/EditUserGroupSubject';
 
 //Shared:
 
@@ -84,6 +88,39 @@ const routes = [
 		path: '/groups/:groupID',
 		name: 'GroupDetails',
 		component: GroupDetails,
+		meta: {
+			requiresAuth: true,
+		},
+	},
+	{
+		path: '/user-group-subjects/new',
+		name: 'AddUserGroupSubject',
+		component: AddUserGroupSubject,
+		meta: {
+			requiresAuth: true,
+		},
+	},
+	{
+		path: '/user-group-subjects/:userGroupSubjectID/edit',
+		name: 'EditUserGroupSubjects',
+		component: EditUserGroupSubject,
+		meta: {
+			requiresAuth: true,
+		},
+	},
+
+	{
+		path: '/user-group-subjects/:userGroupSubjectID',
+		name: 'UserGroupSubject',
+		component: UserGroupSubjectDetails,
+		meta: {
+			requiresAuth: true,
+		},
+	},
+	{
+		path: '/user-group-subjects',
+		name: 'UserGroupSubjects',
+		component: UserGroupSubjects,
 		meta: {
 			requiresAuth: true,
 		},
