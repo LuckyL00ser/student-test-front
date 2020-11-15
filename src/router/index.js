@@ -13,7 +13,6 @@ import AddQuestion from '../views/Teacher/AddQuestion';
 import AddTest from '../views/Teacher/AddTest';
 import EditQuestion from '../views/Teacher/EditQuestion';
 import EditTest from '../views/Teacher/EditTest';
-import Questions from '../views/Teacher/Questions';
 import Results from '../views/Teacher/Results';
 import Groups from '../views/Shared/Groups';
 import Subjects from '../views/Shared/Subjects';
@@ -127,7 +126,7 @@ const routes = [
 	},
 	//Teacher Routes:
 	{
-		path: '/questions/new',
+		path: '/test/:testID/questions/new',
 		name: 'AddQuestion',
 		component: AddQuestion,
 		meta: {
@@ -157,15 +156,6 @@ const routes = [
 		path: '/tests/:testID',
 		name: 'EditTest',
 		component: EditTest,
-		meta: {
-			requiresAuth: true,
-			requiresTeacher: true,
-		},
-	},
-	{
-		path: '/questions',
-		name: 'Questions',
-		component: Questions,
 		meta: {
 			requiresAuth: true,
 			requiresTeacher: true,

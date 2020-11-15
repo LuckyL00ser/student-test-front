@@ -26,7 +26,7 @@
 				<b-checkbox v-model="correct[index]" class="text-nowrap" size="lg" />
 			</b-col>
 			<b-col sm="1">
-				<b-button class="btn btn-danger btn-sm" @click="deleteQuestion(index)">
+				<b-button class="btn btn-danger btn-sm" @click.prevent="deleteQuestion(index)">
 					X
 				</b-button>
 			</b-col>

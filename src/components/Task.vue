@@ -1,6 +1,6 @@
 <template>
 	<b-container fluid>
-		<b-form>
+		<b-form @submit.prevent="submit">
 			<b-form-group>
 				<b-col>
 					<b-form-input
@@ -13,23 +13,19 @@
 				<b-col>
 					<b-form-select
 						class="mt-2"
-						v-model="selectedQuestionType"
+						v-model="task.type"
 						:options="options"
-						v-if="!selectedQuestionType"
+						v-if="!TaskId"
 					>
 					</b-form-select>
 				</b-col>
 				<b-col>
 					<SingleChoiceQuestion
-						v-if="selectedQuestionType == 'SingleChoiceQuestion'"
+						v-if="task.type == 'SingleChoiceQuestion'"
 					/>
 					<MultipleChoiceQuestion
 						:TaskId="this.TaskId"
-						v-if="selectedQuestionType == 'MultipleChoiceQuestion'"
-					/>
-					<TextQuestion
-						:TaskId="this.TaskId"
-						v-if="selectedQuestionType == 'TextQuestion'"
+						v-if="task.type == 'MultipleChoiceQuestion'"
 					/>
 				</b-col>
 				<b-col>
@@ -37,7 +33,7 @@
 						class="mt-2"
 						variant="success"
 						type="submit"
-						v-if="selectedQuestionType"
+						v-if="task.type"
 					>
 						Zapisz
 					</b-button>
@@ -51,35 +47,19 @@
 import * as TaskAPI from '@/api/taskAPI';
 import SingleChoiceQuestion from '@/components/SingleChoiceQuestion.vue';
 import MultipleChoiceQuestion from '@/components/MultipleChoiceQuestion.vue';
-import TextQuestion from '@/components/TextQuestion.vue';
+import { createTask, updateTask } from '../api/taskAPI';
+
 
 export default {
 	name: 'Task',
-	props: ['TaskId'],
+	props: ['TaskId', 'testID'],
 	components: {
 		SingleChoiceQuestion,
 		MultipleChoiceQuestion,
-		TextQuestion,
 	},
 	data: function() {
 		return {
 			task: {
-				id: 0,
-				image: '',
-				points: 0,
-				question: '',
-				testByTestId: {
-					date: Date.now(),
-					fullPoints: 0,
-					id: 0,
-					name: '',
-					subjectBySubjectId: {
-						id: 0,
-						name: '',
-					},
-					time: 0,
-				},
-				type: '',
 			},
 			options: [
 				{
@@ -100,15 +80,33 @@ export default {
 	},
 	created() {
 		if (this.TaskId != null) {
-			const task = this.getTask();
-			this.data.task = task;
+			this.getTask();
 		}
+		if(this.testID)
+			this.data.task.testId = this.testID;
 	},
 	methods: {
 		async getTask() {
 			const response = await TaskAPI.getTask(this.TaskId);
-			return response;
+			this.data.task = response.data
 		},
+		async submit(){
+			try{
+				if(this.TaskId){ //update
+					await createTask(this.data.task);
+					this.$store.toast('success','Dodano nowe pytanie');
+					this.$route.push({route:'EditTest',params: {testID: this.testID}})
+				}else{	//create
+					await updateTask(this.data.task.id,this.data.task);
+					//TODO: await update all questions?
+					this.$store.toast('info','Edytowano pytanie');
+					this.$route.push({route:'EditTest',params: {testID: this.testID}})
+				}
+			}
+			catch(e){
+				this.$store.toast('error',e);
+			}
+		}
 	},
 };
 </script>

@@ -1,10 +1,15 @@
 <template>
-	<div>edytuj pytanie ID: {{ $route.params.questionID }}</div>
+	<div>
+		<div>edytuj pytanie ID: {{ $route.params.questionID }}</div>
+		<Task :task-i-d="$route.params.taskID" />
+	</div>
 </template>
 
 <script>
+import Task from '../../components/Task';
 export default {
 	name: 'EditQuestion',
+	components: { Task },
 };
 </script>
 

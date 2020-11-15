@@ -5,13 +5,13 @@
 		<router-link :to="{ name: 'AddTest' }">Dodaj test</router-link>
 		<TestsList :data="tests">
 			<template v-slot:actions="{ data }">
-				<template v-if="$store.getters.userRole == 'TEACHER_ROLE'">
+<!--				<template v-if="$store.getters.userRole == 'TEACHER_ROLE'">-->
 					<router-link
 						:to="{ name: 'EditTest', params: { testID: data.item.id } }"
 						>Edytuj
 					</router-link>
 					<b-btn @click="deleteTest(data.item.id)">Usuń</b-btn>
-				</template>
+<!--				</template>-->
 				<template v-if="$store.getters.userRole == 'USER_ROLE'">
 					<router-link
 						:to="{ name: 'FillTest', params: { testID: data.item.id } }"
@@ -41,6 +41,7 @@ export default {
 	},
 	mounted() {
 		this.getSubject();
+		this.getTests();
 	},
 	methods: {
 		async getSubject() {
@@ -58,7 +59,8 @@ export default {
 		async getTests() {
 			this.loading = true;
 			try {
-				let response = getTestsBySubject(this.$route.params.subjectID);
+				let response = await getTestsBySubject(this.$route.params.subjectID);
+				console.log(response.data)
 				this.tests = response.data;
 			} catch (e) {
 				this.$store.toast('error', e);

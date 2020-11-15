@@ -48,8 +48,16 @@ export default {
 					sortable: true,
 				},
 				{
+					label: 'Punkty do zdobycia',
+					key: 'fullPoints',
+				},
+				{
 					label: 'Czas na wykonanie',
 					key: 'time',
+				},
+				{
+					label: 'Data',
+					key: 'date',
 				},
 				...this.extraFields,
 				{

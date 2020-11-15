@@ -46,7 +46,17 @@
 					v-slot="vContext"
 				>
 					<b-form-group label="Przedmiot">
-						<SubjectSelector v-model="form.subjectBySubjectId" />
+						<SubjectSelector v-model="form.subjectId" />
+						<CustomInvalidFeedback :validation-context="vContext" />
+					</b-form-group>
+				</ValidationProvider>
+				<ValidationProvider
+						rules="required"
+						class="flex-grow-1"
+						v-slot="vContext"
+				>
+					<b-form-group label="Data?">
+						<b-form-datepicker v-model="form.date"/>
 						<CustomInvalidFeedback :validation-context="vContext" />
 					</b-form-group>
 				</ValidationProvider>
@@ -82,6 +92,7 @@ export default {
 		};
 	},
 	mounted() {
+		console.log(this.testID)
 		if (this.testID) this.getTest();
 		this.getSubjects();
 	},
@@ -99,7 +110,7 @@ export default {
 		async getTest() {
 			this.loading = true;
 			try {
-				const response = await testAPI.getTest(this.groupID);
+				const response = await testAPI.getTest(this.testID);
 				this.form = response.data;
 			} catch (e) {
 				this.$store.toast('error', e);
@@ -117,7 +128,7 @@ export default {
 		async submit() {
 			this.loading = true;
 			try {
-				this.form.time = new Date(this.form.time);
+				this.form.date = new Date(this.form.date);
 				if (this.testID) await testAPI.updateTest(this.groupID, this.form);
 				else await testAPI.createTest(this.form);
 				this.$store.toast('success', 'Zapisano zmiany');
