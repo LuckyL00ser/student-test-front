@@ -7,7 +7,7 @@
 				</b-button>
 			</b-col>
 		</b-row>
-		<b-row v-for="(answer, index) in answers" :key="index" class="mt-2">
+		<b-row v-for="(answer, index) in answer" :key="index" class="mt-2">
 			<b-col sm="2">
 				<label for="txt-answer" class="text-nowrap float-left">
 					Odpowiedź {{ index + 1 }}:
@@ -16,7 +16,7 @@
 			<b-col>
 				<input
 					id="txt-answer"
-					v-model="answers[index]"
+					v-model="answer[index]"
 					type="text"
 					placeholder="Odpowiedź..."
 					class="col-12"
@@ -25,7 +25,7 @@
 			<b-col sm="1">
 				<b-checkbox
 					:id="'box-' + index"
-					v-model="isCorrect[index]"
+					v-model="correct[index]"
 					class="text-nowrap"
 					size="lg"
 					@change="validate(index)"
@@ -41,34 +41,40 @@
 </template>
 
 <script>
-import * as TaskAPI from '@/api/taskAPI';
+import * as AnswerAPI from '@/api/answerAPI';
 
 export default {
 	name: 'SingleChoiceQuestion',
 	props: ['TaskId'],
 	data: function() {
 		return {
-			answers: [''],
-			isCorrect: [false],
+			answer: [''],
+			correct: [false],
 		};
 	},
 	created() {
-		this.getTask();
+		const response = this.getTasksAnswer();
+		if (response.length > 0) {
+			for (let i = 0; i < response.length; i++) {
+				this.answer[i] = response.answer[i];
+				this.correct[i] = response.correct[i];
+			}
+		}
 	},
 	methods: {
-		async getTask() {
-			var response = await TaskAPI.getTask(1);
-			console.log(response);
+		async getTasksAnswer() {
+			return await AnswerAPI.getAnswersByTaskId(this.TaskId);
 		},
+
 		addQuestion() {
-			this.answers.push('');
-			this.isCorrect.push(false);
+			this.answer.push('');
+			this.correct.push(false);
 		},
 
 		deleteQuestion(index) {
-			if (this.answers.length > 1) {
-				this.answers.splice(index, 1);
-				this.isCorrect.splice(index, 1);
+			if (this.answer.length > 1) {
+				this.answer.splice(index, 1);
+				this.correct.splice(index, 1);
 			} else {
 				this.$store.toast(
 					'danger',
