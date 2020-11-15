@@ -1,9 +1,5 @@
 <template>
-	<b-select
-		@input="input"
-		:value="value"
-		:options="computedUsers"
-	></b-select>
+	<b-select @input="input" :value="value" :options="computedUsers"></b-select>
 </template>
 
 <script>
@@ -11,7 +7,7 @@ import { getAllUsers } from '../../api/userAPI';
 
 export default {
 	name: 'UserSelector',
-	props: ['value','teachers'],
+	props: ['value', 'teachers'],
 	data() {
 		return {
 			users: [],
@@ -39,7 +35,9 @@ export default {
 		async getUsers() {
 			try {
 				const response = await getAllUsers();
-				this.users = response.data.filter(x=>this.teachers?x.role=='ROLE_TEACHER':x.role=='ROLE_USER');
+				this.users = response.data.filter(x =>
+					this.teachers ? x.role == 'ROLE_TEACHER' : x.role == 'ROLE_USER',
+				);
 			} catch (e) {
 				this.$store.toast('error', e);
 			}

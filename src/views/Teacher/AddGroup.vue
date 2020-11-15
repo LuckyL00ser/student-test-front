@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<h1>Dodaj grupę</h1>
-		<GroupForm/>
+		<GroupForm />
 	</div>
 </template>
 

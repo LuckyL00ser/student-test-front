@@ -2,7 +2,7 @@ import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
 import store from './store';
-import {initializationUserAuthentication} from './helpers/auth';
+import { initializationUserAuthentication } from './helpers/auth';
 import { ValidationProvider, ValidationObserver } from 'vee-validate';
 import './helpers/validationRules';
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
@@ -15,8 +15,7 @@ Vue.component('ValidationObserver', ValidationObserver);
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 
-
-initializationUserAuthentication(store)
+initializationUserAuthentication(store);
 router.beforeEach((to, from, next) => {
 	// route guard
 	const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
@@ -28,13 +27,12 @@ router.beforeEach((to, from, next) => {
 		record => record.meta.requiresStudent,
 	);
 	const loggedIn = store.state.isLoggedIn;
-	const role = loggedIn ? store.getters.userRole: null;
+	const role = loggedIn ? store.getters.userRole : null;
 
 	if (requiresAuth && !loggedIn) {
 		next({ name: 'Login' });
 	} else if (loggedIn) {
-		if(to.name =='Login' || to.name =='Register')
-			next({name:'Home'})
+		if (to.name == 'Login' || to.name == 'Register') next({ name: 'Home' });
 		else if (
 			(requiresStudent && role != 'ROLE_USER') ||
 			(requiresTeacher && role != 'ROLE_TEACHER') ||
@@ -59,6 +57,3 @@ store.toast = function(variant, message) {
 		variant: variant,
 	});
 };
-
-
-

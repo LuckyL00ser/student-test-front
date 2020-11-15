@@ -1,18 +1,7 @@
 <template>
 	<b-container fluid>
 		<b-row class="mt-2">
-			<b-col sm="2">
-				<label for="txt-question" class="float-left">Pytanie:</label>
-			</b-col>
-			<b-col>
-				<input
-					id="txt-question"
-					v-model="question"
-					placeholder="Pytanie..."
-					class="col-12"
-				/>
-			</b-col>
-			<b-col sm="2">
+			<b-col lg="12">
 				<b-button class="btn btn-success float-right" @click="addQuestion()">
 					Dodaj odpowiedź
 				</b-button>
@@ -34,7 +23,13 @@
 				/>
 			</b-col>
 			<b-col sm="1">
-				<b-checkbox :id="'box-'+index" v-model="isCorrect[index]" class="text-nowrap" size="lg" @change="validate(index)"/>
+				<b-checkbox
+					:id="'box-' + index"
+					v-model="isCorrect[index]"
+					class="text-nowrap"
+					size="lg"
+					@change="validate(index)"
+				/>
 			</b-col>
 			<b-col sm="1">
 				<b-button class="btn btn-danger btn-sm" @click="deleteQuestion(index)">
@@ -46,16 +41,25 @@
 </template>
 
 <script>
+import * as TaskAPI from '@/api/taskAPI';
+
 export default {
 	name: 'SingleChoiceQuestion',
+	props: ['TaskId'],
 	data: function() {
 		return {
-			question: '',
 			answers: [''],
 			isCorrect: [false],
 		};
 	},
+	created() {
+		this.getTask();
+	},
 	methods: {
+		async getTask() {
+			var response = await TaskAPI.getTask(1);
+			console.log(response);
+		},
 		addQuestion() {
 			this.answers.push('');
 			this.isCorrect.push(false);
@@ -71,24 +75,24 @@ export default {
 					'Pytanie musi zawierać co najmniej jedną odpowiedź.',
 				);
 			}
-        },
-        
-        validate(index) {
-            var checkBox = document.getElementById("box-" + index);
-            var items = document.querySelectorAll("div.container-fluid input[type='checkbox']")
-            if(checkBox.checked) {
-                items.forEach(element => {
-                    if (element.checked) 
-                        return;
-                    element.disabled = true;
-                })
-            } else {
-                items.forEach(element => {
-                    element.disabled = false;
-                });
-            }
+		},
 
-        }
+		validate(index) {
+			var checkBox = document.getElementById('box-' + index);
+			var items = document.querySelectorAll(
+				"div.container-fluid input[type='checkbox']",
+			);
+			if (checkBox.checked) {
+				items.forEach(element => {
+					if (element.checked) return;
+					element.disabled = true;
+				});
+			} else {
+				items.forEach(element => {
+					element.disabled = false;
+				});
+			}
+		},
 	},
 };
 </script>

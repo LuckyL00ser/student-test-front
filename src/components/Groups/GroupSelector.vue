@@ -1,9 +1,5 @@
 <template>
-	<b-select
-		@input="input"
-		:value="value"
-		:options="computedGroups"
-	></b-select>
+	<b-select @input="input" :value="value" :options="computedGroups"></b-select>
 </template>
 
 <script>

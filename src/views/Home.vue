@@ -1,18 +1,18 @@
 <template>
 	<div class="home">
-		{{$store.getters.isLoggedIn? 'Panel główny':'Strona główna'}}
-<!--		<MultipleChoiceQuestion />-->
+		{{ $store.getters.isLoggedIn ? 'Panel główny' : 'Strona główna' }}
+		<Task />
 	</div>
 </template>
 
 <script>
-// import MultipleChoiceQuestion from '../components/MultipleChoiceQuestion';
+import Task from '../components/Task';
 
 export default {
 	name: 'Home',
-	// components: {
-	// 	MultipleChoiceQuestion,
-	// },
+	components: {
+		Task,
+	},
 	data() {
 		return {
 			loading: false,

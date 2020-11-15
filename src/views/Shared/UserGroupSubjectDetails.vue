@@ -1,18 +1,35 @@
 <template>
 	<div>
 		<h1>Szczegóły user-group-subject</h1>
-		<p>Przedmiot:
-			<router-link :to="{route: 'SubjectDetails',params: {subjectID:form.subjectBySubjectId.id}}">
-				{{form.subjectBySubjectId.name}}
+		<p>
+			Przedmiot:
+			<router-link
+				:to="{
+					route: 'SubjectDetails',
+					params: { subjectID: form.subjectBySubjectId.id },
+				}"
+			>
+				{{ form.subjectBySubjectId.name }}
 			</router-link>
 		</p>
-		<p>Grupa:
-			<router-link :to="{route: 'GroupDetails',params: {groupID:form.groupByGroupId.id}}">
-				{{form.groupByGroupId.name}}
+		<p>
+			Grupa:
+			<router-link
+				:to="{
+					route: 'GroupDetails',
+					params: { groupID: form.groupByGroupId.id },
+				}"
+			>
+				{{ form.groupByGroupId.name }}
 			</router-link>
 		</p>
-		<p>Nauczyciel: {{form.userByTeacherId.name}} {{form.userByUserId.lastname}}</p>
-		<p>Student: {{form.userByUserId.name}} {{form.userByUserId.lastname}}</p>
+		<p>
+			Nauczyciel: {{ form.userByTeacherId.name }}
+			{{ form.userByUserId.lastname }}
+		</p>
+		<p>
+			Student: {{ form.userByUserId.name }} {{ form.userByUserId.lastname }}
+		</p>
 	</div>
 </template>
 

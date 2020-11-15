@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<h1>Dodaj user-group-subject</h1>
-		<UserGroupSubjectForm/>
+		<UserGroupSubjectForm />
 	</div>
 </template>
 

@@ -23,9 +23,7 @@ export default {
 		async getSubject() {
 			this.loading = true;
 			try {
-				const response = await groupAPI.getGroup(
-					this.$route.params.groupID,
-				);
+				const response = await groupAPI.getGroup(this.$route.params.groupID);
 				this.form = response.data;
 			} catch (e) {
 				this.$store.toast('error', e);
