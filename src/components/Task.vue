@@ -93,13 +93,14 @@ export default {
 		async submit(){
 			try{
 				if(this.TaskId){ //update
-					await createTask(this.data.task);
-					this.$store.toast('success','Dodano nowe pytanie');
+					await updateTask(this.data.task.id,this.data.task);
+					//TODO: await update all answers?
+					this.$store.toast('info','Edytowano pytanie');
 					this.$route.push({route:'EditTest',params: {testID: this.testID}})
 				}else{	//create
-					await updateTask(this.data.task.id,this.data.task);
-					//TODO: await update all questions?
-					this.$store.toast('info','Edytowano pytanie');
+					await createTask(this.data.task);
+					//TODO: await create all answers
+					this.$store.toast('success','Dodano nowe pytanie');
 					this.$route.push({route:'EditTest',params: {testID: this.testID}})
 				}
 			}
