@@ -53,7 +53,7 @@ export default {
 				this.loggingIn = true;
 				await this.$store.dispatch('login', this.loginData);
 				this.$router.push('/');
-				this.$store.toast('info', 'Zalogowano');
+			//	this.$store.toast('info', 'Zalogowano');
 			} catch (e) {
 				console.error(e);
 			}

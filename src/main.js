@@ -8,12 +8,24 @@ import './helpers/validationRules';
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
+import { axios } from './helpers/axiosConfig';
 
 Vue.config.productionTip = false;
 Vue.component('ValidationProvider', ValidationProvider);
 Vue.component('ValidationObserver', ValidationObserver);
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
+
+axios.interceptors.response.use(
+	response => response,
+	async error => {
+		if (error.response.status === 401) {
+			await store.dispatch('logout');
+			router.push({name:'Home'});
+		}
+		return error;
+	},
+);
 
 initializationUserAuthentication(store);
 router.beforeEach((to, from, next) => {

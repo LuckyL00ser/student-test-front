@@ -23,12 +23,12 @@
 					<SingleChoiceQuestion
 						:TaskId="TaskId"
 						v-if="task.type == 'SingleChoiceQuestion'"
-						v-model="dane"
+						v-model="answerList"
 					/>
 					<MultipleChoiceQuestion
 						:TaskId="TaskId"
 						v-if="task.type == 'MultipleChoiceQuestion'"
-						v-model="dane"
+						v-model="answerList"
 					/>
 				</b-col>
 				<b-col>
@@ -63,7 +63,6 @@ export default {
 	data: function() {
 		return {
 			task: {
-				id: 0,
 				image: '',
 				points: 0,
 				question: '',
@@ -85,7 +84,7 @@ export default {
 				},
 			],
 			selectedQuestionType: null,
-			dane: null,
+			answerList: [],
 		};
 	},
 	created() {
@@ -104,11 +103,12 @@ export default {
 		async submit() {
 			try {
 				if (this.TaskId) { //update
-					await updateTask(this.data.task.id, this.data.task);
+					await updateTask(this.task.id, this.data.task);
 					this.$store.toast('info', 'Edytowano pytanie');
 					this.$route.push({ route:'EditTest', params: { testID: this.testID }})
 				} else { //create
-					await createTask(this.data.task);
+					this.task.answerList = this.answerList;
+					await createTask(this.task);
 					//TODO: await create all answers
 					this.$store.toast('success', 'Dodano nowe pytanie');
 					this.$route.push({route:'EditTest', params: {testID: this.testID}})

@@ -2,14 +2,15 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import { setCredentials } from '../helpers/axiosConfig';
 import * as auth from '../helpers/auth';
-import { signin } from '@/api/authAPI';
-import { refresh } from '../api/authAPI';
+import { signin, refresh } from '@/api/authAPI';
+
 Vue.use(Vuex);
 
-export default new Vuex.Store({
+const store = new Vuex.Store({
 	state: {
 		isLoggedIn: null,
 		user: null,
+		timer: null,
 	},
 	mutations: {
 		login(state, payload) {
@@ -22,6 +23,9 @@ export default new Vuex.Store({
 			state.isLoggedIn = false;
 			state.user = null;
 			auth.removeFromLocalStorage();
+		},
+		setTimer(state, payload) {
+			state.timer = payload;
 		},
 	},
 	getters: {
@@ -51,16 +55,23 @@ export default new Vuex.Store({
 		async authorize({ commit }, data) {
 			setCredentials(data.jwt);
 			commit('login', data);
+
+			// const timer = setTimeout(() => {
+			// 	dispatch('refreshToken');
+			// }, 30*1000);
+			// commit('setTimer', timer);
 		},
-		logout({ commit }) {
+		logout({ commit,state }) {
 			commit('logout');
-			this.toast('info', 'Wylogowano');
+			if(state.timer)
+				clearTimeout(state.timer)
+			commit('setTimer',null)
+			//	this.toast('info', 'Wylogowano');
 		},
 		async refreshToken({ dispatch, state }) {
 			try {
 				const response = await refresh();
-				setCredentials(response.data.jwt);
-				auth.setLocalStorage(state.user, response.data.jwt);
+				dispatch('authorize',{jwt:response.data.jwt,user:state.user})
 			} catch (error) {
 				dispatch('logout');
 			}
@@ -68,3 +79,4 @@ export default new Vuex.Store({
 	},
 	modules: {},
 });
+export default store;

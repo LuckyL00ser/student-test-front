@@ -58,6 +58,7 @@ export default {
 				{
 					label: 'Data',
 					key: 'date',
+					formatter: date => (new Date(date)).toLocaleString()
 				},
 				...this.extraFields,
 				{

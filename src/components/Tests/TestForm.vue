@@ -2,54 +2,58 @@
 	<div>
 		<ValidationObserver v-slot="{ handleSubmit }" ref="form">
 			<b-form @submit.prevent="handleSubmit(submit)">
-				<ValidationProvider
-					rules="required"
-					class="flex-grow-1"
-					v-slot="vContext"
-				>
-					<b-form-group label="Nazwa">
-						<b-form-input v-model="form.name" type="text" name="text" />
+				<b-row>
+					<ValidationProvider
+							rules="required"
+							v-slot="vContext"
+							class="col-6"
+					>
+						<b-form-group label="Nazwa">
+							<b-form-input v-model="form.name" type="text" name="text" />
 
-						<CustomInvalidFeedback :validation-context="vContext" />
-					</b-form-group>
-				</ValidationProvider>
-				<ValidationProvider
-					rules="required|numeric"
-					class="flex-grow-1"
-					v-slot="vContext"
-				>
-					<b-form-group label="Ilość punktów do zdobycia">
-						<b-form-spinbutton
-							v-model="form.fullPoints"
-							min="1"
-						></b-form-spinbutton>
-						<CustomInvalidFeedback :validation-context="vContext" />
-					</b-form-group>
-				</ValidationProvider>
-				<ValidationProvider
-					rules="required|numeric"
-					class="flex-grow-1"
-					v-slot="vContext"
-				>
-					<b-form-group label="Czas na wypełnienie (minuty)">
-						<b-form-spinbutton
-							v-model="form.time"
-							:min="1"
-							:max="100"
-						></b-form-spinbutton>
-						<CustomInvalidFeedback :validation-context="vContext" />
-					</b-form-group>
-				</ValidationProvider>
-				<ValidationProvider
-					rules="required"
-					class="flex-grow-1"
-					v-slot="vContext"
-				>
-					<b-form-group label="Przedmiot">
-						<SubjectSelector v-model="form.subjectId" />
-						<CustomInvalidFeedback :validation-context="vContext" />
-					</b-form-group>
-				</ValidationProvider>
+							<CustomInvalidFeedback :validation-context="vContext" />
+						</b-form-group>
+					</ValidationProvider>
+					<ValidationProvider
+							rules="required|numeric"
+							v-slot="vContext"
+							class="col-6"
+					>
+						<b-form-group label="Ilość punktów do zdobycia">
+							<b-form-spinbutton
+									v-model="form.fullPoints"
+									min="1"
+							></b-form-spinbutton>
+							<CustomInvalidFeedback :validation-context="vContext" />
+						</b-form-group>
+					</ValidationProvider>
+				</b-row>
+				<b-row>
+					<ValidationProvider
+							rules="required|numeric"
+							v-slot="vContext"
+							class="col-6"
+					>
+						<b-form-group label="Czas na wypełnienie (minuty)">
+							<b-form-spinbutton
+									v-model="form.time"
+									:min="1"
+									:max="100"
+							></b-form-spinbutton>
+							<CustomInvalidFeedback :validation-context="vContext" />
+						</b-form-group>
+					</ValidationProvider>
+					<ValidationProvider
+							rules="required"
+							v-slot="vContext"
+							class="col-6"
+					>
+						<b-form-group label="Przedmiot">
+							<SubjectSelector v-model="form.subjectId" />
+							<CustomInvalidFeedback :validation-context="vContext" />
+						</b-form-group>
+					</ValidationProvider>
+				</b-row>
 				<ValidationProvider
 						rules="required"
 						class="flex-grow-1"
@@ -92,7 +96,6 @@ export default {
 		};
 	},
 	mounted() {
-		console.log(this.testID)
 		if (this.testID) this.getTest();
 		this.getSubjects();
 	},
@@ -112,6 +115,7 @@ export default {
 			try {
 				const response = await testAPI.getTest(this.testID);
 				this.form = response.data;
+				this.form.subjectId = response.data.subjectBySubjectId.id;
 			} catch (e) {
 				this.$store.toast('error', e);
 			}
@@ -129,7 +133,7 @@ export default {
 			this.loading = true;
 			try {
 				this.form.date = new Date(this.form.date);
-				if (this.testID) await testAPI.updateTest(this.groupID, this.form);
+				if (this.testID) await testAPI.updateTest(this.testID, this.form);
 				else await testAPI.createTest(this.form);
 				this.$store.toast('success', 'Zapisano zmiany');
 				this.$router.back();

@@ -1,5 +1,5 @@
 import { axios } from './axiosConfig';
-//import {signin} from '@/api/authAPI';
+
 
 // async function login(credentials) {
 // 	try {
@@ -30,8 +30,11 @@ function removeFromLocalStorage() {
 	localStorage.removeItem('jwt');
 }
 async function initializationUserAuthentication(store) {
+
+
 	let user = null;
 	let jwt = null;
+
 	if (getJwt()) {
 		jwt = getJwt();
 	} else {
