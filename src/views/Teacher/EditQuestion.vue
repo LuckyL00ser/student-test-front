@@ -5,7 +5,7 @@
 		</router-link>
 		<br>
 		<div>edytuj pytanie ID: {{ $route.params.questionID }}</div>
-		<Task :task-i-d="$route.params.taskID" />
+		<Task :task-id="$route.params.questionID" :test-i-d="$route.params.testID"/>
 	</div>
 </template>
 

@@ -7,7 +7,7 @@
 				</b-button>
 			</b-col>
 		</b-row>
-		<b-row v-for="(item, index) in answer" :key="index" class="mt-2">
+		<b-row v-for="(item, index) in answers" :key="index" class="mt-2">
 			<b-col sm="2">
 				<label for="txt-answer" class="text-nowrap float-left">
 					Odpowiedź {{ index + 1 }}:
@@ -16,7 +16,7 @@
 			<b-col>
 				<input
 					id="txt-answer"
-					v-model="answer[index]"
+					v-model="answers[index].answer"
 					type="text"
 					placeholder="Odpowiedź..."
 					class="col-12"
@@ -25,7 +25,7 @@
 			<b-col sm="1">
 				<b-checkbox
 					:id="'box-' + index"
-					v-model="correct[index]"
+					v-model="answers[index].correct"
 					class="text-nowrap"
 					size="lg"
 					@change="validate(index)"
@@ -42,39 +42,50 @@
 
 <script>
 import * as AnswerAPI from '@/api/answerAPI';
+import { deleteAnswer } from '../api/answerAPI';
 
 export default {
 	name: 'SingleChoiceQuestion',
-	props: ['TaskId'],
+	props: ['taskId'],
 	data: function() {
 		return {
-			answer: [''],
-			correct: [false],
+			answers: [
+				{
+					answer: '',
+					correct: false
+				}
+			]
 		};
 	},
-	created() {
-		const response = this.getTasksAnswer();
-		if (response.length > 0) {
-			for (let i = 0; i < response.length; i++) {
-				this.answer[i] = response.answer[i];
-				this.correct[i] = response.correct[i];
-			}
+	async created() {
+
+		if(this.taskId)  {
+			this.getTasksAnswer();
+
 		}
 	},
 	methods: {
 		async getTasksAnswer() {
-			return await AnswerAPI.getAnswersByTaskId(this.TaskId);
+			const response = await AnswerAPI.getAnswersByTaskId(this.taskId);
+			this.answers = response.data
 		},
 
 		addQuestion() {
-			this.answer.push('');
-			this.correct.push(false);
+			this.answers.push({
+				answer: '',
+				correct: false
+			});
+		//	this.correct.push(false);
 		},
 
-		deleteQuestion(index) {
-			if (this.answer.length > 1) {
-				this.answer.splice(index, 1);
-				this.correct.splice(index, 1);
+		async deleteQuestion(index) {
+			if(this.answers[index].id){
+				await deleteAnswer(this.answers[index].id);
+				this.getTasksAnswer();
+				return;
+			}
+			if (this.answers.length > 1) {
+				this.answers.splice(index, 1);
 			} else {
 				this.$store.toast(
 					'danger',
@@ -89,8 +100,11 @@ export default {
 				"div.container-fluid input[type='checkbox']",
 			);
 			items.forEach((element, i) => {
-				if (element !== checkBox) this.correct[i] = false;
+				if (element !== checkBox) this.answers[i].correct = false;
 			});
+		},
+		getAnswers(){
+			return this.answers;
 		}
 	},
 };

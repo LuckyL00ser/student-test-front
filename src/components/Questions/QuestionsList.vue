@@ -22,21 +22,29 @@
 
 <script>
 import Loader from '../common/Loader';
+import * as questionAPI from '@/api/taskAPI';
+
 export default {
 	name: 'QuestionsList',
 	components: { Loader },
 	props: ['questions', 'loading', 'isTestRated'],
 	data() {
 		return {
+			questionTypes: {
+				MultipleChoiceQuestion: 'wielokrotnego wyboru',
+				SingleChoiceQuestion: 'jednokrotnego wyboru',
+				TextQuestion: 'opisowe',
+			},
 			fields: [
 				{
 					label: 'Pytanie',
-					key: 'name',
+					key: 'question',
 					sortable: true,
 				},
 				{
 					label: 'Rodzaj pytania',
 					key: 'type',
+					formatter: question => this.questionTypes[question],
 					sortable: true,
 				},
 				{
@@ -57,9 +65,8 @@ export default {
 	},
 	methods: {
 		async deleteQuestion(id) {
-			//TODO: id pyatnia jako argument
 			try {
-				// await questionAPI.deleteQuestion(id);
+				 await questionAPI.deleteTask(id);
 				this.$store.toast('success', 'Usunięto pytanie');
 				this.$emit('questionDeleted', id);
 			} catch (e) {

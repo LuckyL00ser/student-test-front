@@ -1,37 +1,62 @@
 <template>
 	<b-container fluid>
-		<b-form @submit.prevent="submit">
-			<b-form-group>
-				<b-col>
-					<b-form-input
-						id="txt-question"
-						class="col-lg-12"
-						v-model="task.question"
-						placeholder="Pytanie..."
-					/>
+		<b-form @submit.prevent="submit" >
+			<b-row>
+				<b-col class="col-9">
+					<b-form-group label="Rodzaj pytania" class="mb-5">
+						<b-form-select
+								class="mt-2"
+								v-model="task.type"
+								:options="options"
+								:disabled="!!taskId"
+						>
+						</b-form-select>
+					</b-form-group>
+					<b-row>
+						<b-col>
+							<b-form-group label="Pytanie">
+								<b-form-input
+										id="txt-question"
+										class="col-lg-12"
+										v-model="task.question"
+										placeholder="Pytanie..."
+								/>
+							</b-form-group>
+						</b-col>
+						<b-col>
+							<b-form-group label="Ilość punktów">
+								<b-spinbutton v-model="task.points" min="1"></b-spinbutton>
+							</b-form-group>
+						</b-col>
+					</b-row>
+					<b-col>
+						<SingleChoiceQuestion
+								:task-id="taskId"
+								v-if="task.type == 'SingleChoiceQuestion'"
+								ref="single"
+						/>
+						<MultipleChoiceQuestion
+								:task-id="taskId"
+								v-if="task.type == 'MultipleChoiceQuestion'"
+								ref="multiple"
+						/>
+					</b-col>
 				</b-col>
 				<b-col>
-					<b-form-select
-						class="mt-2"
-						v-model="task.type"
-						:options="options"
-						v-if="!TaskId"
-					>
-					</b-form-select>
+					<b-form-group label="Obrazek" class="row">
+						<b-col class="w-100">
+							<b-form-input
+									id="txt-question"
+									class="row mt-2"
+									v-model="task.image"
+									placeholder="URL obrazka"
+							/>
+							<img class="row w-100" v-if="task.image" :src="task.image" alt="obrazek do pytania">
+						</b-col>
+					</b-form-group>
 				</b-col>
-				<b-col>
-					<SingleChoiceQuestion
-						:TaskId="TaskId"
-						v-if="task.type == 'SingleChoiceQuestion'"
-						v-model="answerList"
-					/>
-					<MultipleChoiceQuestion
-						:TaskId="TaskId"
-						v-if="task.type == 'MultipleChoiceQuestion'"
-						v-model="answerList"
-					/>
-				</b-col>
-				<b-col>
+			</b-row>
+				<b-row>
 					<b-button
 						class="mt-2"
 						variant="success"
@@ -40,8 +65,7 @@
 					>
 						Zapisz
 					</b-button>
-				</b-col>
-			</b-form-group>
+				</b-row>
 		</b-form>
 	</b-container>
 </template>
@@ -52,10 +76,9 @@ import SingleChoiceQuestion from '@/components/SingleChoiceQuestion.vue';
 import MultipleChoiceQuestion from '@/components/MultipleChoiceQuestion.vue';
 import { createTask, updateTask } from '../api/taskAPI';
 
-
 export default {
 	name: 'Task',
-	props: ['TaskId', 'testID'],
+	props: ['taskId', 'testID'],
 	components: {
 		SingleChoiceQuestion,
 		MultipleChoiceQuestion,
@@ -83,12 +106,11 @@ export default {
 					text: 'Pytanie opisowe',
 				},
 			],
-			selectedQuestionType: null,
 			answerList: [],
 		};
 	},
-	created() {
-		if (this.TaskId != null) {
+	mounted() {
+		if (this.taskId != null) {
 			this.getTask();
 		}
 		if (this.testID) {
@@ -97,27 +119,48 @@ export default {
 	},
 	methods: {
 		async getTask() {
-			const response = await TaskAPI.getTask(this.TaskId);
+			const response = await TaskAPI.getTask(this.taskId);
 			this.task = response.data;
+			this.task.testId = this.task.testByTestId.id;
+		},
+		readAnswers() {
+			switch (this.task.type) {
+				case 'MultipleChoiceQuestion':
+					this.task.answerList = this.$refs.multiple.getAnswers();
+					break;
+				case 'SingleChoiceQuestion':
+					this.task.answerList = this.$refs.single.getAnswers();
+					break;
+				case 'TextQuestion':
+				default:
+					this.task.answerList = [];
+			}
 		},
 		async submit() {
 			try {
-				if (this.TaskId) { //update
-					await updateTask(this.task.id, this.data.task);
-					this.$store.toast('info', 'Edytowano pytanie');
-					this.$route.push({ route:'EditTest', params: { testID: this.testID }})
-				} else { //create
-					this.task.answerList = this.answerList;
+				if (this.taskId) {
+					//update
+					this.readAnswers();
+					await updateTask(this.task.id, this.task);
+					this.$store.toast('info', 'Zapisano zmiany');
+					this.$router.push({
+						name: 'EditTest',
+						params: { testID: this.testID },
+					});
+				} else {
+					//create
+					this.readAnswers();
 					await createTask(this.task);
-					//TODO: await create all answers
 					this.$store.toast('success', 'Dodano nowe pytanie');
-					this.$route.push({route:'EditTest', params: {testID: this.testID}})
+					this.$router.push({
+						name: 'EditTest',
+						params: { testID: this.testID },
+					});
 				}
-			}
-			catch (e) {
+			} catch (e) {
 				this.$store.toast('error', e);
 			}
-		}
+		},
 	},
 };
 </script>

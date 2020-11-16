@@ -52,7 +52,7 @@ const store = new Vuex.Store({
 				throw Error(error);
 			}
 		},
-		async authorize({ commit }, data) {
+		async authorize({ commit }, data) { //dispatch
 			setCredentials(data.jwt);
 			commit('login', data);
 
@@ -71,7 +71,7 @@ const store = new Vuex.Store({
 		async refreshToken({ dispatch, state }) {
 			try {
 				const response = await refresh();
-				dispatch('authorize',{jwt:response.data.jwt,user:state.user})
+				dispatch('authorize',{jwt:response.data.jwt,...state.user})
 			} catch (error) {
 				dispatch('logout');
 			}

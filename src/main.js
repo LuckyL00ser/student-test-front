@@ -19,11 +19,10 @@ Vue.use(IconsPlugin);
 axios.interceptors.response.use(
 	response => response,
 	async error => {
-		if (error.response.status === 401) {
-			await store.dispatch('logout');
-			router.push({name:'Home'});
+		if (error.response.status === 401 && error.response.path!='/api/auth/singup') {
+			await store.dispatch('refreshToken');
 		}
-		return error;
+		throw Error(error)
 	},
 );
 
