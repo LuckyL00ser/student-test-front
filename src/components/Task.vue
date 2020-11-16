@@ -21,11 +21,14 @@
 				</b-col>
 				<b-col>
 					<SingleChoiceQuestion
+						:TaskId="TaskId"
 						v-if="task.type == 'SingleChoiceQuestion'"
+						v-model="dane"
 					/>
 					<MultipleChoiceQuestion
-						:TaskId="this.TaskId"
+						:TaskId="TaskId"
 						v-if="task.type == 'MultipleChoiceQuestion'"
+						v-model="dane"
 					/>
 				</b-col>
 				<b-col>
@@ -60,6 +63,12 @@ export default {
 	data: function() {
 		return {
 			task: {
+				id: 0,
+				image: '',
+				points: 0,
+				question: '',
+				testId: 0,
+				type: '',
 			},
 			options: [
 				{
@@ -76,36 +85,37 @@ export default {
 				},
 			],
 			selectedQuestionType: null,
+			dane: null,
 		};
 	},
 	created() {
 		if (this.TaskId != null) {
 			this.getTask();
 		}
-		if(this.testID)
+		if (this.testID) {
 			this.task.testId = this.testID;
+		}
 	},
 	methods: {
 		async getTask() {
 			const response = await TaskAPI.getTask(this.TaskId);
-			this.task = response.data
+			this.task = response.data;
 		},
-		async submit(){
-			try{
-				if(this.TaskId){ //update
-					await updateTask(this.data.task.id,this.data.task);
-					//TODO: await update all answers?
-					this.$store.toast('info','Edytowano pytanie');
-					this.$route.push({route:'EditTest',params: {testID: this.testID}})
-				}else{	//create
+		async submit() {
+			try {
+				if (this.TaskId) { //update
+					await updateTask(this.data.task.id, this.data.task);
+					this.$store.toast('info', 'Edytowano pytanie');
+					this.$route.push({ route:'EditTest', params: { testID: this.testID }})
+				} else { //create
 					await createTask(this.data.task);
 					//TODO: await create all answers
-					this.$store.toast('success','Dodano nowe pytanie');
-					this.$route.push({route:'EditTest',params: {testID: this.testID}})
+					this.$store.toast('success', 'Dodano nowe pytanie');
+					this.$route.push({route:'EditTest', params: {testID: this.testID}})
 				}
 			}
-			catch(e){
-				this.$store.toast('error',e);
+			catch (e) {
+				this.$store.toast('error', e);
 			}
 		}
 	},

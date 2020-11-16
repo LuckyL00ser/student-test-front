@@ -7,7 +7,7 @@
 				</b-button>
 			</b-col>
 		</b-row>
-		<b-row v-for="(answer, index) in answer" :key="index" class="mt-2">
+		<b-row v-for="(item, index) in answer" :key="index" class="mt-2">
 			<b-col sm="2">
 				<label for="txt-answer" class="text-nowrap float-left">
 					Odpowiedź {{ index + 1 }}:

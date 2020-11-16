@@ -7,7 +7,7 @@
 				</b-button>
 			</b-col>
 		</b-row>
-		<b-row v-for="(answer, index) in answer" :key="index" class="mt-2">
+		<b-row v-for="(item, index) in answer" :key="index" class="mt-2">
 			<b-col sm="2">
 				<label for="txt-answer" class="text-nowrap float-left">
 					Odpowiedź {{ index + 1 }}:
@@ -88,17 +88,10 @@ export default {
 			var items = document.querySelectorAll(
 				"div.container-fluid input[type='checkbox']",
 			);
-			if (checkBox.checked) {
-				items.forEach(element => {
-					if (element.checked) return;
-					element.disabled = true;
-				});
-			} else {
-				items.forEach(element => {
-					element.disabled = false;
-				});
-			}
-		},
+			items.forEach((element, i) => {
+				if (element !== checkBox) this.correct[i] = false;
+			});
+		}
 	},
 };
 </script>
