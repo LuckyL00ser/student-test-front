@@ -2,7 +2,7 @@
 	<b-container fluid>
 		<b-form @submit.prevent="submit" >
 			<b-row>
-				<b-col class="col-9">
+				<b-col class="col-8">
 					<b-form-group label="Rodzaj pytania" class="mb-5">
 						<b-form-select
 								class="mt-2"
@@ -42,12 +42,12 @@
 						/>
 					</b-col>
 				</b-col>
-				<b-col>
-					<b-form-group label="Obrazek" class="row">
+				<b-col class="col-4">
+					<b-form-group label="Obrazek" class=" w-100">
 						<b-col class="w-100">
 							<b-form-input
 									id="txt-question"
-									class="row mt-2"
+									class="row w-100 mt-2 mb-5"
 									v-model="task.image"
 									placeholder="URL obrazka"
 							/>
@@ -57,14 +57,16 @@
 				</b-col>
 			</b-row>
 				<b-row>
-					<b-button
-						class="mt-2"
-						variant="success"
-						type="submit"
-						v-if="task.type"
-					>
-						Zapisz
-					</b-button>
+					<b-col>
+						<b-button
+								class="mt-2"
+								variant="success"
+								type="submit"
+								v-if="task.type"
+						>
+							Zapisz
+						</b-button>
+					</b-col>
 				</b-row>
 		</b-form>
 	</b-container>
@@ -121,7 +123,7 @@ export default {
 		async getTask() {
 			const response = await TaskAPI.getTask(this.taskId);
 			this.task = response.data;
-			this.task.testId = this.task.testByTestId.id;
+			this.task.testId = this.testID
 		},
 		readAnswers() {
 			switch (this.task.type) {

@@ -241,7 +241,7 @@ const routes = [
 		component: FillTest,
 		meta: {
 			requiresAuth: true,
-			requiresStudent: true,
+		//	requiresStudent: true,
 		},
 	},
 	{

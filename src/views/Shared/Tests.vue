@@ -1,6 +1,6 @@
 <template>
 	<div>
-		testy
+		<h2>Wybierz test który chcesz wypełnić</h2>
 		<router-link
 			v-if="$store.state.user.role == 'teacher'"
 			tag="button"
@@ -18,7 +18,7 @@
 					</router-link>
 					<b-btn @click="deleteTest(data.item.id)">Usuń</b-btn>
 				</template>
-				<template v-else-if="$store.state.user.role == 'student'">
+				<template v-else-if="new Date(data.item.date)<new Date()">
 					<router-link
 						:to="{ name: 'FillTest', params: { testID: data.item.id } }"
 						>Zacznij wypelniac</router-link
@@ -31,36 +31,28 @@
 
 <script>
 import TestsList from '../../components/Tests/TestsList';
+import { getAllTests } from '../../api/testAPI';
 export default {
 	name: 'Tests',
 	components: { TestsList },
 	data() {
 		return {
-			exampleTests: [
-				{
-					id: 1,
-					name: 'Grafika',
-					time: '20',
-				},
-				{
-					id: 2,
-					name: 'Cyberbezpieczenstwo',
-					time: '35',
-				},
-				{
-					id: 3,
-					name: 'WF',
-					time: '22',
-				},
-				{
-					id: 4,
-					name: 'Matematyka dyskretna',
-					time: '15',
-				},
-			],
+			exampleTests: [],
 		};
 	},
+	mounted() {
+		this.getTests();
+	},
 	methods: {
+		async getTests(){
+			try{
+				const response = await getAllTests();
+				this.exampleTests = response.data
+			}
+			catch (e) {
+				this.$store.toast('error', 'Niepowodzenie ususwania testu' + e);
+			}
+		},
 		async deleteTest(id) {
 			try {
 				//TODO: api call

@@ -7,14 +7,14 @@
 				</b-button>
 			</b-col>
 		</b-row>
-		<b-row v-for="(item, index) in answers" :key="index" class="mt-2">
+		<b-row v-for="(item, index) in answers" :key="index" class="mt-2 align-items-center">
 			<b-col sm="2">
-				<label for="txt-answer" class="text-nowrap float-left">
+				<label for="txt-answer" class="text-nowrap">
 					Odpowiedź {{ index + 1 }}:
 				</label>
 			</b-col>
 			<b-col>
-				<input
+				<b-input
 					id="txt-answer"
 					v-model="answers[index].answer"
 					type="text"
@@ -32,7 +32,7 @@
 				/>
 			</b-col>
 			<b-col sm="1">
-				<b-button class="btn btn-danger btn-sm" @click="deleteQuestion(index)">
+				<b-button class="btn btn-danger btn-sm" @click="deleteQuestion(index)" v-if="answers.length>1">
 					X
 				</b-button>
 			</b-col>
@@ -52,7 +52,7 @@ export default {
 			answers: [
 				{
 					answer: '',
-					correct: false
+					correct: true
 				}
 			]
 		};

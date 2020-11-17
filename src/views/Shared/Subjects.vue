@@ -1,14 +1,11 @@
 <template>
 	<div>
-		<h1>{{ title }}</h1>
-		<router-link
-			v-if="$store.getters.userRole == 'ROLE_TEACHER'"
-			tag="button"
-			class="btn-primary rounded"
-			:to="{ name: 'AddSubject' }"
-		>
-			Dodaj przedmiot
-		</router-link>
+		<div class="d-flex align-items-center justify-content-between mt-5">
+			<h3 >{{ title }}</h3>
+			<router-link tag="button" class="btn rounded-0 shadow   btn-outline-success" v-if="$store.getters.userRole == 'ROLE_TEACHER'" :to="{ name: 'AddSubject' }">
+				Dodaj przedmiot
+			</router-link>
+		</div>
 		<SubjectsList :data="subjects">
 			<template v-slot:actions="{ data }">
 				<router-link

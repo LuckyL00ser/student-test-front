@@ -20,6 +20,8 @@ axios.interceptors.response.use(
 	response => response,
 	async error => {
 		if (error.response.status === 401 && error.response.path!='/api/auth/singup') {
+			console.log(error)
+			console.log(error.response);
 			await store.dispatch('refreshToken');
 		}
 		throw Error(error)

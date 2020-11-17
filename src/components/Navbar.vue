@@ -84,14 +84,14 @@ export default {
 					name: 'Grupy',
 					route: { name: 'Groups' },
 				},
-				{
-					name: 'Do oceny',
-					route: { name: 'TestsReadyToRate' },
-				},
-				{
-					name: 'User-group-subjects',
-					route: { name: 'UserGroupSubjects' },
-				},
+				// {
+				// 	name: 'Do oceny',
+				// 	route: { name: 'TestsReadyToRate' },
+				// },
+				// {
+				// 	name: 'User-group-subjects',
+				// 	route: { name: 'UserGroupSubjects' },
+				// },
 			],
 		};
 	},

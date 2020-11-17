@@ -7,7 +7,7 @@
 		:fields="fields"
 		:busy="loading"
 	>
-		<template v-slot:cell(actions)="data">
+		<template v-slot:cell(actions)="data" >
 			<slot name="actions" :data="data"></slot>
 		</template>
 		<template v-slot:table-busy>

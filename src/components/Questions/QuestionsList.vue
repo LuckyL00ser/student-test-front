@@ -12,7 +12,7 @@
 				:to="{ name: 'EditQuestion', params: { questionID: data.item.id } }"
 				>Edytuj</router-link
 			>
-			<b-btn @click="deleteQuestion(data.item.id)">Usuń</b-btn>
+			<b-btn class="mx-2 btn-danger" @click="deleteQuestion(data.item.id)">Usuń</b-btn>
 		</template>
 		<template v-slot:table-busy>
 			<Loader :loading="loading" />

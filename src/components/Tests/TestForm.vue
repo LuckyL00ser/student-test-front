@@ -19,21 +19,6 @@
 							v-slot="vContext"
 							class="col-6"
 					>
-						<b-form-group label="Ilość punktów do zdobycia">
-							<b-form-spinbutton
-									v-model="form.fullPoints"
-									min="1"
-							></b-form-spinbutton>
-							<CustomInvalidFeedback :validation-context="vContext" />
-						</b-form-group>
-					</ValidationProvider>
-				</b-row>
-				<b-row>
-					<ValidationProvider
-							rules="required|numeric"
-							v-slot="vContext"
-							class="col-6"
-					>
 						<b-form-group label="Czas na wypełnienie (minuty)">
 							<b-form-spinbutton
 									v-model="form.time"
@@ -43,13 +28,28 @@
 							<CustomInvalidFeedback :validation-context="vContext" />
 						</b-form-group>
 					</ValidationProvider>
+				</b-row>
+				<b-row>
 					<ValidationProvider
 							rules="required"
 							v-slot="vContext"
 							class="col-6"
 					>
 						<b-form-group label="Przedmiot">
-							<SubjectSelector v-model="form.subjectId" />
+							<SubjectSelector v-model="form.subjectId" :disabled="!!testID"/>
+							<CustomInvalidFeedback :validation-context="vContext" />
+						</b-form-group>
+					</ValidationProvider>
+					<ValidationProvider
+							rules="required|numeric"
+							v-slot="vContext"
+							class="col-6"
+					>
+						<b-form-group label="Ilość punktów do zdobycia">
+							<b-form-spinbutton
+									v-model="form.fullPoints"
+									min="1"
+							></b-form-spinbutton>
 							<CustomInvalidFeedback :validation-context="vContext" />
 						</b-form-group>
 					</ValidationProvider>
@@ -59,7 +59,7 @@
 						class="flex-grow-1"
 						v-slot="vContext"
 				>
-					<b-form-group label="Data?">
+					<b-form-group label="Dostępny do wypełniania od">
 						<b-form-datepicker v-model="form.date"/>
 						<CustomInvalidFeedback :validation-context="vContext" />
 					</b-form-group>

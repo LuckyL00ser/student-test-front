@@ -47,16 +47,17 @@ export default {
 					key: 'name',
 					sortable: true,
 				},
+				// {
+				// 	label: 'Punkty do zdobycia',
+				// 	key: 'fullPoints',
+				// },
 				{
-					label: 'Punkty do zdobycia',
-					key: 'fullPoints',
-				},
-				{
-					label: 'Czas na wykonanie',
+					label: 'Czas na wypełnienie',
 					key: 'time',
+					formatter: time=> `${time} minut`
 				},
 				{
-					label: 'Data',
+					label: 'Aktywny od',
 					key: 'date',
 					formatter: date => (new Date(date)).toLocaleString()
 				},

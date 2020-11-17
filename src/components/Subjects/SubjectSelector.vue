@@ -3,6 +3,7 @@
 		@input="input"
 		:value="value"
 		:options="computedSubjects"
+		:disabled="disabled"
 	></b-select>
 </template>
 
@@ -11,7 +12,7 @@ import { getAllSubjects } from '../../api/subjectAPI';
 
 export default {
 	name: 'SubjectSelector',
-	props: ['value'],
+	props: ['value','disabled'],
 	data() {
 		return {
 			subjects: [],

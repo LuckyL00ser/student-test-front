@@ -1,10 +1,11 @@
 <template>
 	<div>
-		<router-link :to="{name: 'EditTest',params: {testID: $route.params.testID}}">
-			Powrót do edcji testu
-		</router-link>
-		<br>
-		dodaj pytanie
+		<div class="d-flex align-items-center justify-content-between mt-2 mb-4">
+			<h3 >Dodaj pytanie</h3>
+			<router-link  v-if="$store.getters.userRole == 'ROLE_TEACHER'" :to="{name: 'EditTest',params: {testID: $route.params.testID}}">
+				Powrót do edcji testu
+			</router-link>
+		</div>
 		<Task :test-i-d="$route.params.testID" />
 	</div>
 </template>

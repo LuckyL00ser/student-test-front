@@ -1,12 +1,16 @@
 <template>
 	<div>
-		<div>edytuj test ID: {{ $route.params.testID }}</div>
+		<h2>Edycja testu</h2>
 		<TestForm :test-i-d="$route.params.testID"/>
-		Pula pytań:
+		<hr>
+		<div class="d-flex align-items-center justify-content-between mt-5">
+			<h3 >Pula pytań:</h3>
+			<router-link tag="button" class="btn rounded-0 shadow   btn-outline-success" :to="{name: 'AddQuestion', params: {}}">
+				Dodaj pytanie
+			</router-link>
+		</div>
 		<QuestionsList :questions="questions" @questionDeleted="getQuestions"/>
-		<router-link :to="{name: 'AddQuestion', params: {}}">
-			Dodaj pytanie
-		</router-link>
+
 	</div>
 </template>
 

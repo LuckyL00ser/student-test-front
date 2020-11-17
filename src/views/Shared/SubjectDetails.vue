@@ -1,8 +1,12 @@
 <template>
 	<div>
-		<h1>Szczegóły przedmiotu - {{ form.name }}</h1>
-		<p>Testy dla przedmiotu:</p>
-		<router-link :to="{ name: 'AddTest' }">Dodaj test</router-link>
+		<h2>Szczegóły przedmiotu - {{ form.name }}</h2>
+		<div class="d-flex align-items-center justify-content-between mt-5">
+			<h5 >Testy dla przedmiotu</h5>
+			<router-link tag="button" class="btn rounded-0 shadow   btn-outline-success" v-if="$store.getters.userRole == 'ROLE_TEACHER'" :to="{ name: 'AddTest' }">
+				Dodaj test
+			</router-link>
+		</div>
 		<TestsList :data="tests">
 			<template v-slot:actions="{ data }">
 <!--				<template v-if="$store.getters.userRole == 'TEACHER_ROLE'">-->
