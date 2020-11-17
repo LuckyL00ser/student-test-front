@@ -26,7 +26,8 @@
 								class="shadow"
 								type="submit"
 								>Zaloguj</b-btn
-							>
+							> <br />
+							<b-link href="#/resendVeryficationMail">Ponowna weryfikacja email</b-link>
 						</div>
 					</b-form>
 				</ValidationObserver>
