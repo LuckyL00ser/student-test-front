@@ -3,11 +3,7 @@
 		<ValidationObserver v-slot="{ handleSubmit }" ref="form">
 			<b-form @submit.prevent="handleSubmit(submit)">
 				<b-row>
-					<ValidationProvider
-							rules="required"
-							v-slot="vContext"
-							class="col-6"
-					>
+					<ValidationProvider rules="required" v-slot="vContext" class="col-6">
 						<b-form-group label="Nazwa">
 							<b-form-input v-model="form.name" type="text" name="text" />
 
@@ -15,52 +11,48 @@
 						</b-form-group>
 					</ValidationProvider>
 					<ValidationProvider
-							rules="required|numeric"
-							v-slot="vContext"
-							class="col-6"
+						rules="required|numeric"
+						v-slot="vContext"
+						class="col-6"
 					>
 						<b-form-group label="Czas na wypełnienie (minuty)">
 							<b-form-spinbutton
-									v-model="form.time"
-									:min="1"
-									:max="100"
+								v-model="form.time"
+								:min="1"
+								:max="100"
 							></b-form-spinbutton>
 							<CustomInvalidFeedback :validation-context="vContext" />
 						</b-form-group>
 					</ValidationProvider>
 				</b-row>
 				<b-row>
-					<ValidationProvider
-							rules="required"
-							v-slot="vContext"
-							class="col-6"
-					>
+					<ValidationProvider rules="required" v-slot="vContext" class="col-6">
 						<b-form-group label="Przedmiot">
-							<SubjectSelector v-model="form.subjectId" :disabled="!!testID"/>
+							<SubjectSelector v-model="form.subjectId" :disabled="!!testID" />
 							<CustomInvalidFeedback :validation-context="vContext" />
 						</b-form-group>
 					</ValidationProvider>
 					<ValidationProvider
-							rules="required|numeric"
-							v-slot="vContext"
-							class="col-6"
+						rules="required|numeric"
+						v-slot="vContext"
+						class="col-6"
 					>
 						<b-form-group label="Ilość punktów do zdobycia">
 							<b-form-spinbutton
-									v-model="form.fullPoints"
-									min="1"
+								v-model="form.fullPoints"
+								min="1"
 							></b-form-spinbutton>
 							<CustomInvalidFeedback :validation-context="vContext" />
 						</b-form-group>
 					</ValidationProvider>
 				</b-row>
 				<ValidationProvider
-						rules="required"
-						class="flex-grow-1"
-						v-slot="vContext"
+					rules="required"
+					class="flex-grow-1"
+					v-slot="vContext"
 				>
 					<b-form-group label="Dostępny do wypełniania od">
-						<b-form-datepicker v-model="form.date"/>
+						<b-form-datepicker v-model="form.date" />
 						<CustomInvalidFeedback :validation-context="vContext" />
 					</b-form-group>
 				</ValidationProvider>
@@ -117,7 +109,7 @@ export default {
 				this.form = response.data;
 				this.form.subjectId = response.data.subjectBySubjectId.id;
 			} catch (e) {
-				this.$store.toast('error', e);
+				this.$store.toast('danger', e);
 			}
 			this.loading = false;
 		},
@@ -126,7 +118,7 @@ export default {
 				const response = await getAllSubjects();
 				this.subjects = response.data;
 			} catch (e) {
-				this.$store.toast('error', e);
+				this.$store.toast('danger', e);
 			}
 		},
 		async submit() {
@@ -138,7 +130,7 @@ export default {
 				this.$store.toast('success', 'Zapisano zmiany');
 				this.$router.back();
 			} catch (e) {
-				this.$store.toast('error', e);
+				this.$store.toast('danger', e);
 			}
 			this.loading = false;
 		},

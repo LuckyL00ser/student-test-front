@@ -23,10 +23,18 @@
 				/>
 			</b-col>
 			<b-col sm="1">
-				<b-checkbox v-model="answers[index].correct" class="text-nowrap" size="lg" />
+				<b-checkbox
+					v-model="answers[index].correct"
+					class="text-nowrap"
+					size="lg"
+				/>
 			</b-col>
 			<b-col sm="1">
-				<b-button class="btn btn-danger btn-sm" @click.prevent="deleteQuestion(index)" v-if="answers.length>1">
+				<b-button
+					class="btn btn-danger btn-sm"
+					@click.prevent="deleteQuestion(index)"
+					v-if="answers.length > 1"
+				>
 					X
 				</b-button>
 			</b-col>
@@ -46,32 +54,32 @@ export default {
 			answers: [
 				{
 					answer: '',
-					correct: false
-				}
-			]
+					correct: false,
+				},
+			],
 		};
 	},
 	async created() {
-		if(this.taskId)  {
+		if (this.taskId) {
 			await this.getTasksAnswer();
 		}
 	},
 	methods: {
 		async getTasksAnswer() {
 			const response = await AnswerAPI.getAnswersByTaskId(this.taskId);
-			this.answers = response.data
+			this.answers = response.data;
 		},
 
 		addQuestion() {
 			this.answers.push({
 				answer: '',
-				correct: false
+				correct: false,
 			});
 			//this.correct.push(false);
 		},
 
 		async deleteQuestion(index) {
-			if(this.answers[index].id){
+			if (this.answers[index].id) {
 				await deleteAnswer(this.answers[index].id);
 				this.getTasksAnswer();
 				return;
@@ -85,9 +93,9 @@ export default {
 				);
 			}
 		},
-		getAnswers(){
+		getAnswers() {
 			return this.answers;
-		}
+		},
 	},
 };
 </script>

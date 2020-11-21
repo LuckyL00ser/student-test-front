@@ -57,7 +57,7 @@ export default {
 				);
 				this.form = response.data;
 			} catch (e) {
-				this.$store.toast('error', e);
+				this.$store.toast('danger', e);
 			}
 			this.loading = false;
 		},

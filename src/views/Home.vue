@@ -1,12 +1,10 @@
 <template>
 	<div class="home">
-		{{ $store.getters.isLoggedIn ? 'Panel główny' : 'Strona główna' }}
-
+		<h3>Witaj w aplikacji testy dla studenta.</h3>
 	</div>
 </template>
 
 <script>
-
 export default {
 	name: 'Home',
 	data() {

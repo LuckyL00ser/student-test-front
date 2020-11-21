@@ -12,7 +12,7 @@ import { getAllSubjects } from '../../api/subjectAPI';
 
 export default {
 	name: 'SubjectSelector',
-	props: ['value','disabled'],
+	props: ['value', 'disabled'],
 	data() {
 		return {
 			subjects: [],
@@ -42,7 +42,7 @@ export default {
 				const response = await getAllSubjects();
 				this.subjects = response.data;
 			} catch (e) {
-				this.$store.toast('error', e);
+				this.$store.toast('danger', e);
 			}
 		},
 	},

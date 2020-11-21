@@ -37,7 +37,7 @@ export default {
 				const response = await getAllGroups();
 				this.groups = response.data;
 			} catch (e) {
-				this.$store.toast('error', e);
+				this.$store.toast('danger', e);
 			}
 		},
 	},

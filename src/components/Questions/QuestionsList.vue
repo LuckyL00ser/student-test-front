@@ -12,10 +12,14 @@
 				:to="{ name: 'EditQuestion', params: { questionID: data.item.id } }"
 				>Edytuj</router-link
 			>
-			<b-btn class="mx-2 btn-danger" @click="deleteQuestion(data.item.id)">Usuń</b-btn>
+			<b-btn class="mx-2 btn-danger" @click="deleteQuestion(data.item.id)"
+				>Usuń</b-btn
+			>
 		</template>
 		<template v-slot:table-busy>
-			<Loader :loading="loading" />
+			<div class="position-relative">
+				<Loader :loading="loading" />
+			</div>
 		</template>
 	</b-table>
 </template>
@@ -66,7 +70,7 @@ export default {
 	methods: {
 		async deleteQuestion(id) {
 			try {
-				 await questionAPI.deleteTask(id);
+				await questionAPI.deleteTask(id);
 				this.$store.toast('success', 'Usunięto pytanie');
 				this.$emit('questionDeleted', id);
 			} catch (e) {

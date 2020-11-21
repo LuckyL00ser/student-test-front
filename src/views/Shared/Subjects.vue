@@ -1,12 +1,17 @@
 <template>
 	<div>
 		<div class="d-flex align-items-center justify-content-between mt-5">
-			<h3 >{{ title }}</h3>
-			<router-link tag="button" class="btn rounded-0 shadow   btn-outline-success" v-if="$store.getters.userRole == 'ROLE_TEACHER'" :to="{ name: 'AddSubject' }">
+			<h3>{{ title }}</h3>
+			<router-link
+				tag="button"
+				class="btn rounded-0 shadow   btn-outline-success"
+				v-if="$store.getters.userRole == 'ROLE_TEACHER'"
+				:to="{ name: 'AddSubject' }"
+			>
 				Dodaj przedmiot
 			</router-link>
 		</div>
-		<SubjectsList :data="subjects">
+		<SubjectsList :data="subjects" :loading="loading">
 			<template v-slot:actions="{ data }">
 				<router-link
 					:to="{ name: 'SubjectDetails', params: { subjectID: data.item.id } }"
@@ -61,7 +66,7 @@ export default {
 
 				this.subjects = response.data;
 			} catch (e) {
-				this.$store.toast('error', e);
+				this.$store.toast('danger', e);
 			}
 			this.loading = false;
 		},
@@ -72,7 +77,7 @@ export default {
 				this.$store.toast('info', 'Usunięto');
 				this.getSubjects();
 			} catch (e) {
-				this.$store.toast('error', e);
+				this.$store.toast('danger', e);
 			}
 			this.loading = false;
 		},

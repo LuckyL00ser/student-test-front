@@ -4,20 +4,20 @@
 		<b-container class="container">
 			<router-view />
 		</b-container>
-		<footer>
-			<b-container>
-				<b-row>
-					<b-col>
-						<h2>Aplikacja StudentTest</h2>
-					</b-col>
-					<b-col>
-						<a href="mailto:xyz@gmail.com">Mail kontaktowy 1 </a>
-						<br />
-						<a href="mailto:abc@gmail.com">Mail kontaktowy 2</a>
-					</b-col>
-				</b-row>
-			</b-container>
-		</footer>
+		<!--		<footer>-->
+		<!--			<b-container>-->
+		<!--				<b-row>-->
+		<!--					<b-col>-->
+		<!--						<h2>Aplikacja StudentTest</h2>-->
+		<!--					</b-col>-->
+		<!--					<b-col>-->
+		<!--						<a href="mailto:xyz@gmail.com">Mail kontaktowy 1 </a>-->
+		<!--						<br />-->
+		<!--						<a href="mailto:abc@gmail.com">Mail kontaktowy 2</a>-->
+		<!--					</b-col>-->
+		<!--				</b-row>-->
+		<!--			</b-container>-->
+		<!--		</footer>-->
 	</main>
 </template>
 

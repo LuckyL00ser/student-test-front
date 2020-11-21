@@ -1,7 +1,11 @@
 <template>
 	<div>
 		<h2>Testy oczekujace do oceny</h2>
-		<TestsList :data="exampleTests" :extra-fields="extraFields">
+		<TestsList
+			:data="exampleTests"
+			:extra-fields="extraFields"
+			:loading="loading"
+		>
 			<template v-slot:actions="{ data }">
 				<template v-if="$store.state.user.role == 'teacher'">
 					<router-link
@@ -62,6 +66,7 @@ export default {
 					},
 				},
 			],
+			loading: false,
 		};
 	},
 	methods: {

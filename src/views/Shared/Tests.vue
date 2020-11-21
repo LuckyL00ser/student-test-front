@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<h2>Wybierz test który chcesz wypełnić</h2>
+		<h2>{{ title }}</h2>
 		<router-link
 			v-if="$store.state.user.role == 'teacher'"
 			tag="button"
@@ -9,16 +9,16 @@
 		>
 			Stwórz nowy
 		</router-link>
-		<TestsList :data="exampleTests">
+		<TestsList :data="exampleTests" :loading="loading">
 			<template v-slot:actions="{ data }">
-				<template v-if="$store.state.user.role == 'teacher'">
+				<template v-if="$store.getters.userRole == 'ROLE_TEACHER'">
 					<router-link
 						:to="{ name: 'EditTest', params: { testID: data.item.id } }"
 						>Edytuj
 					</router-link>
 					<b-btn @click="deleteTest(data.item.id)">Usuń</b-btn>
 				</template>
-				<template v-else-if="new Date(data.item.date)<new Date()">
+				<template v-else-if="new Date(data.item.date) < new Date()">
 					<router-link
 						:to="{ name: 'FillTest', params: { testID: data.item.id } }"
 						>Zacznij wypelniac</router-link
@@ -38,20 +38,29 @@ export default {
 	data() {
 		return {
 			exampleTests: [],
+			loading: false,
 		};
 	},
 	mounted() {
 		this.getTests();
 	},
+	computed: {
+		title() {
+			return this.$store.getters.userRole == 'ROLE_TEACHER'
+				? 'Testy'
+				: 'Wybierz test który chcesz wypełnić';
+		},
+	},
 	methods: {
-		async getTests(){
-			try{
+		async getTests() {
+			this.loading = true;
+			try {
 				const response = await getAllTests();
-				this.exampleTests = response.data
+				this.exampleTests = response.data;
+			} catch (e) {
+				this.$store.toast('danger', 'Niepowodzenie pobierania testów' + e);
 			}
-			catch (e) {
-				this.$store.toast('error', 'Niepowodzenie ususwania testu' + e);
-			}
+			this.loading = false;
 		},
 		async deleteTest(id) {
 			try {

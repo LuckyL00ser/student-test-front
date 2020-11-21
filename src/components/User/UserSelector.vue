@@ -39,7 +39,7 @@ export default {
 					this.teachers ? x.role == 'ROLE_TEACHER' : x.role == 'ROLE_USER',
 				);
 			} catch (e) {
-				this.$store.toast('error', e);
+				this.$store.toast('danger', e);
 			}
 		},
 	},

@@ -11,7 +11,9 @@
 			<slot name="actions" :data="data"></slot>
 		</template>
 		<template v-slot:table-busy>
-			<Loader :loading="loading" />
+			<div class="position-relative">
+				<Loader :loading="loading" />
+			</div>
 		</template>
 	</b-table>
 </template>

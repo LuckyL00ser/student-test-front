@@ -27,6 +27,9 @@ const store = new Vuex.Store({
 		setTimer(state, payload) {
 			state.timer = payload;
 		},
+		setRole(state, payload) {
+			state.user.roles = [payload];
+		},
 	},
 	getters: {
 		isLoggedIn(state) {
@@ -37,8 +40,8 @@ const store = new Vuex.Store({
 				state.user &&
 				state.user.roles &&
 				state.user.roles.length
-				? 'ROLE_TEACHER'
-				: null; // state.user.roles[0]
+				? state.user.roles[0]
+				: null; //
 		},
 	},
 	actions: {
@@ -48,11 +51,17 @@ const store = new Vuex.Store({
 
 				dispatch('authorize', response.data);
 			} catch (error) {
-				this.toast('error', 'Niepoprawne dane logowania');
-				throw Error(error);
+				console.log(error.response.data.message);
+				let message = '';
+				if (error.response.data.message == 'Verify your email')
+					message = 'Zweryfikuj swój email';
+				else message = 'Niepoprawne dane logowania';
+				this.toast('danger', message);
+				throw error;
 			}
 		},
-		async authorize({ commit }, data) { //dispatch
+		async authorize({ commit }, data) {
+			//dispatch
 			setCredentials(data.jwt);
 			commit('login', data);
 
@@ -61,17 +70,16 @@ const store = new Vuex.Store({
 			// }, 30*1000);
 			// commit('setTimer', timer);
 		},
-		logout({ commit,state }) {
+		logout({ commit, state }) {
 			commit('logout');
-			if(state.timer)
-				clearTimeout(state.timer)
-			commit('setTimer',null)
+			if (state.timer) clearTimeout(state.timer);
+			commit('setTimer', null);
 			//	this.toast('info', 'Wylogowano');
 		},
 		async refreshToken({ dispatch, state }) {
 			try {
 				const response = await refresh();
-				dispatch('authorize',{jwt:response.data.jwt,...state.user})
+				dispatch('authorize', { jwt: response.data.jwt, ...state.user });
 			} catch (error) {
 				dispatch('logout');
 			}

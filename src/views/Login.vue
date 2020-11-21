@@ -26,8 +26,11 @@
 								class="shadow"
 								type="submit"
 								>Zaloguj</b-btn
-							> <br />
-							<b-link href="#/resendVeryficationMail">Ponowna weryfikacja email</b-link>
+							>
+							<br />
+							<b-link href="#/resendVeryficationMail"
+								>Ponowna weryfikacja email</b-link
+							>
 						</div>
 					</b-form>
 				</ValidationObserver>
@@ -54,8 +57,9 @@ export default {
 				this.loggingIn = true;
 				await this.$store.dispatch('login', this.loginData);
 				this.$router.push('/');
-			//	this.$store.toast('info', 'Zalogowano');
+				//	this.$store.toast('info', 'Zalogowano');
 			} catch (e) {
+				//	qgsftreukufshpscxk@upived.com
 				console.error(e);
 			}
 			this.loggingIn = false;

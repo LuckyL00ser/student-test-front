@@ -7,7 +7,11 @@
 				</b-button>
 			</b-col>
 		</b-row>
-		<b-row v-for="(item, index) in answers" :key="index" class="mt-2 align-items-center">
+		<b-row
+			v-for="(item, index) in answers"
+			:key="index"
+			class="mt-2 align-items-center"
+		>
 			<b-col sm="2">
 				<label for="txt-answer" class="text-nowrap">
 					Odpowiedź {{ index + 1 }}:
@@ -32,7 +36,11 @@
 				/>
 			</b-col>
 			<b-col sm="1">
-				<b-button class="btn btn-danger btn-sm" @click="deleteQuestion(index)" v-if="answers.length>1">
+				<b-button
+					class="btn btn-danger btn-sm"
+					@click="deleteQuestion(index)"
+					v-if="answers.length > 1"
+				>
 					X
 				</b-button>
 			</b-col>
@@ -52,34 +60,32 @@ export default {
 			answers: [
 				{
 					answer: '',
-					correct: true
-				}
-			]
+					correct: true,
+				},
+			],
 		};
 	},
 	async created() {
-
-		if(this.taskId)  {
+		if (this.taskId) {
 			this.getTasksAnswer();
-
 		}
 	},
 	methods: {
 		async getTasksAnswer() {
 			const response = await AnswerAPI.getAnswersByTaskId(this.taskId);
-			this.answers = response.data
+			this.answers = response.data;
 		},
 
 		addQuestion() {
 			this.answers.push({
 				answer: '',
-				correct: false
+				correct: false,
 			});
-		//	this.correct.push(false);
+			//	this.correct.push(false);
 		},
 
 		async deleteQuestion(index) {
-			if(this.answers[index].id){
+			if (this.answers[index].id) {
 				await deleteAnswer(this.answers[index].id);
 				this.getTasksAnswer();
 				return;
@@ -103,9 +109,9 @@ export default {
 				if (element !== checkBox) this.answers[i].correct = false;
 			});
 		},
-		getAnswers(){
+		getAnswers() {
 			return this.answers;
-		}
+		},
 	},
 };
 </script>

@@ -2,20 +2,25 @@
 	<div>
 		<h2>Szczegóły przedmiotu - {{ form.name }}</h2>
 		<div class="d-flex align-items-center justify-content-between mt-5">
-			<h5 >Testy dla przedmiotu</h5>
-			<router-link tag="button" class="btn rounded-0 shadow   btn-outline-success" v-if="$store.getters.userRole == 'ROLE_TEACHER'" :to="{ name: 'AddTest' }">
+			<h5>Testy dla przedmiotu</h5>
+			<router-link
+				tag="button"
+				class="btn rounded-0 shadow   btn-outline-success"
+				v-if="$store.getters.userRole == 'ROLE_TEACHER'"
+				:to="{ name: 'AddTest' }"
+			>
 				Dodaj test
 			</router-link>
 		</div>
-		<TestsList :data="tests">
+		<TestsList :data="tests" :loading="loading">
 			<template v-slot:actions="{ data }">
-<!--				<template v-if="$store.getters.userRole == 'TEACHER_ROLE'">-->
-					<router-link
-						:to="{ name: 'EditTest', params: { testID: data.item.id } }"
-						>Edytuj
-					</router-link>
-					<b-btn @click="deleteTest(data.item.id)">Usuń</b-btn>
-<!--				</template>-->
+				<!--				<template v-if="$store.getters.userRole == 'TEACHER_ROLE'">-->
+				<router-link
+					:to="{ name: 'EditTest', params: { testID: data.item.id } }"
+					>Edytuj
+				</router-link>
+				<b-btn variant="danger" @click="deleteTest(data.item.id)">Usuń</b-btn>
+				<!--				</template>-->
 				<template v-if="$store.getters.userRole == 'USER_ROLE'">
 					<router-link
 						:to="{ name: 'FillTest', params: { testID: data.item.id } }"
@@ -56,7 +61,7 @@ export default {
 				);
 				this.form = response.data;
 			} catch (e) {
-				this.$store.toast('error', e);
+				this.$store.toast('danger', e);
 			}
 			this.loading = false;
 		},
@@ -64,10 +69,10 @@ export default {
 			this.loading = true;
 			try {
 				let response = await getTestsBySubject(this.$route.params.subjectID);
-				console.log(response.data)
+				console.log(response.data);
 				this.tests = response.data;
 			} catch (e) {
-				this.$store.toast('error', e);
+				this.$store.toast('danger', e);
 			}
 			this.loading = false;
 		},
@@ -78,7 +83,7 @@ export default {
 				this.$store.toast('info', 'Usunięto');
 				this.getTests();
 			} catch (e) {
-				this.$store.toast('error', e);
+				this.$store.toast('danger', e);
 			}
 			this.loading = false;
 		},

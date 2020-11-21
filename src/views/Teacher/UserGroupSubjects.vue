@@ -9,7 +9,7 @@
 		>
 			Dodaj user-group-subject
 		</router-link>
-		<UserGroupSubjectList :data="userGroupSubjects">
+		<UserGroupSubjectList :data="userGroupSubjects" :loading="loading">
 			<template v-slot:actions="{ data }">
 				<router-link
 					:to="{
@@ -62,7 +62,7 @@ export default {
 				const response = await getAllUserGroupSubjects();
 				this.userGroupSubjects = response.data;
 			} catch (e) {
-				this.$store.toast('error', e);
+				this.$store.toast('danger', e);
 			}
 			this.loading = false;
 		},
@@ -73,7 +73,7 @@ export default {
 				this.$store.toast('info', 'Usunięto');
 				this.getUserGroupSubjects();
 			} catch (e) {
-				this.$store.toast('error', e);
+				this.$store.toast('danger', e);
 			}
 			this.loading = false;
 		},

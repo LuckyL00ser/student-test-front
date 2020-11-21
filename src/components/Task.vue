@@ -1,14 +1,14 @@
 <template>
 	<b-container fluid>
-		<b-form @submit.prevent="submit" >
+		<b-form @submit.prevent="submit">
 			<b-row>
 				<b-col class="col-8">
 					<b-form-group label="Rodzaj pytania" class="mb-5">
 						<b-form-select
-								class="mt-2"
-								v-model="task.type"
-								:options="options"
-								:disabled="!!taskId"
+							class="mt-2"
+							v-model="task.type"
+							:options="options"
+							:disabled="!!taskId"
 						>
 						</b-form-select>
 					</b-form-group>
@@ -16,10 +16,10 @@
 						<b-col>
 							<b-form-group label="Pytanie">
 								<b-form-input
-										id="txt-question"
-										class="col-lg-12"
-										v-model="task.question"
-										placeholder="Pytanie..."
+									id="txt-question"
+									class="col-lg-12"
+									v-model="task.question"
+									placeholder="Pytanie..."
 								/>
 							</b-form-group>
 						</b-col>
@@ -31,14 +31,14 @@
 					</b-row>
 					<b-col>
 						<SingleChoiceQuestion
-								:task-id="taskId"
-								v-if="task.type == 'SingleChoiceQuestion'"
-								ref="single"
+							:task-id="taskId"
+							v-if="task.type == 'SingleChoiceQuestion'"
+							ref="single"
 						/>
 						<MultipleChoiceQuestion
-								:task-id="taskId"
-								v-if="task.type == 'MultipleChoiceQuestion'"
-								ref="multiple"
+							:task-id="taskId"
+							v-if="task.type == 'MultipleChoiceQuestion'"
+							ref="multiple"
 						/>
 					</b-col>
 				</b-col>
@@ -46,28 +46,33 @@
 					<b-form-group label="Obrazek" class=" w-100">
 						<b-col class="w-100">
 							<b-form-input
-									id="txt-question"
-									class="row w-100 mt-2 mb-5"
-									v-model="task.image"
-									placeholder="URL obrazka"
+								id="txt-question"
+								class="row w-100 mt-2 mb-5"
+								v-model="task.image"
+								placeholder="URL obrazka"
 							/>
-							<img class="row w-100" v-if="task.image" :src="task.image" alt="obrazek do pytania">
+							<img
+								class="row w-100"
+								v-if="task.image"
+								:src="task.image"
+								alt="obrazek do pytania"
+							/>
 						</b-col>
 					</b-form-group>
 				</b-col>
 			</b-row>
-				<b-row>
-					<b-col>
-						<b-button
-								class="mt-2"
-								variant="success"
-								type="submit"
-								v-if="task.type"
-						>
-							Zapisz
-						</b-button>
-					</b-col>
-				</b-row>
+			<b-row>
+				<b-col>
+					<b-button
+						class="mt-2"
+						variant="success"
+						type="submit"
+						v-if="task.type"
+					>
+						Zapisz
+					</b-button>
+				</b-col>
+			</b-row>
 		</b-form>
 	</b-container>
 </template>
@@ -123,7 +128,7 @@ export default {
 		async getTask() {
 			const response = await TaskAPI.getTask(this.taskId);
 			this.task = response.data;
-			this.task.testId = this.testID
+			this.task.testId = this.testID;
 		},
 		readAnswers() {
 			switch (this.task.type) {
@@ -160,7 +165,7 @@ export default {
 					});
 				}
 			} catch (e) {
-				this.$store.toast('error', e);
+				this.$store.toast('danger', e);
 			}
 		},
 	},

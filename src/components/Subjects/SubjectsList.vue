@@ -7,11 +7,13 @@
 		:fields="fields"
 		:busy="loading"
 	>
-		<template v-slot:cell(actions)="data" >
+		<template v-slot:cell(actions)="data">
 			<slot name="actions" :data="data"></slot>
 		</template>
 		<template v-slot:table-busy>
-			<Loader :loading="loading" />
+			<div class="position-relative">
+				<Loader :loading="loading" />
+			</div>
 		</template>
 	</b-table>
 </template>

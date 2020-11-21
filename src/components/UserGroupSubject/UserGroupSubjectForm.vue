@@ -91,7 +91,7 @@ export default {
 				);
 				this.form = response.data;
 			} catch (e) {
-				this.$store.toast('error', e);
+				this.$store.toast('danger', e);
 			}
 			this.loading = false;
 		},
@@ -104,7 +104,7 @@ export default {
 				this.$store.toast('success', 'Zapisano zmiany');
 				this.$router.back();
 			} catch (e) {
-				this.$store.toast('error', e);
+				this.$store.toast('danger', e);
 			}
 			this.loading = false;
 		},

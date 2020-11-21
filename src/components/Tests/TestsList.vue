@@ -11,7 +11,9 @@
 			<slot name="actions" :data="data"> </slot>
 		</template>
 		<template v-slot:table-busy>
-			<Loader :loading="loading" />
+			<div class="position-relative">
+				<Loader :loading="loading" />
+			</div>
 		</template>
 	</b-table>
 </template>
@@ -54,12 +56,12 @@ export default {
 				{
 					label: 'Czas na wypełnienie',
 					key: 'time',
-					formatter: time=> `${time} minut`
+					formatter: time => `${time} minut`,
 				},
 				{
 					label: 'Aktywny od',
 					key: 'date',
-					formatter: date => (new Date(date)).toLocaleString()
+					formatter: date => new Date(date).toLocaleString(),
 				},
 				...this.extraFields,
 				{
