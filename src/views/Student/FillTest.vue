@@ -22,7 +22,7 @@
 						</div>
 						<b-row class="flex-grow-1">
 							<b-col class="col-12 col-md-6 col-lg-4 h-100" v-if="question.image">
-								<img :src="question.image" class="w-100" alt="obrazek pytanie" />
+								<img :src="question.image"  alt="obrazek pytanie" />
 							</b-col>
 							<b-col class="col-12 col-lg-6  h-100 pb-2">
 								<ul v-if="question.type != 'TextQuestion'">
@@ -128,5 +128,8 @@ export default {
 	ul{
 		list-style: none;
 		padding-left: 0;
+	}
+	img {
+		max-height: 280px;
 	}
 </style>
