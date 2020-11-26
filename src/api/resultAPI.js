@@ -12,8 +12,8 @@ export const addPointsToResult = async (points,resultId) =>
 export const getResultWIthMarkListByUserIdAndSubjectName = async (groupId,isMark,subjectId,teacherId)=>
 	axios.get(`/result/teacher/subject/group/isMark?groupId=${groupId}&isMark=${isMark}&subjectId=${subjectId}&teacherId=${teacherId}`);
 
-export const getResultByUserIdAndGeneraTestIdAndAnswerList = async(answerList,generateTestId,userId)=>
-	axios.get(`/result/user/answerList?answerList=${answerList}&generateTestId=${generateTestId}&userId=${userId}`);
+export const sendTestAnswers = async(answerList,generateTestId,userId)=>
+	axios.post(`/result/user/answerList?generateTestId=${generateTestId}&userId=${userId}`,answerList);
 
 export const getNextTermResult = async(answerList,resultId)=>
 	axios.get(`/result/user/answerList/nextTerm?answerList=${answerList}&resultId=${resultId}`)

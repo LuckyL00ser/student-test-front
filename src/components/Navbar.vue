@@ -29,84 +29,82 @@
 <script>
 export default {
 	name: 'Navbar',
-	data() {
-		return {
-			defaultRoutes: [
-				{
-					name: 'Logowanie',
-					route: { name: 'Login' },
-				},
-				{
-					name: 'Rejestracja',
-					route: { name: 'Register' },
-				},
-			],
-			adminRoutes: [],
-			teacherRoutes: [
-				{
-					name: 'Wyniki',
-					route: { name: 'Results' },
-				},
-				{
-					name: 'Grupy nauczyciela',
-					route: {
-						name: 'TeacherGroups',
-						params: { teacherID: this.$store.state.user.id },
-					},
-				},
-				{
-					name: 'Przedmioty nauczyciela',
-					route: {
-						name: 'TeacherSubjects',
-						params: { teacherID: this.$store.state.user.id },
-					},
-				},
-				{
-					name: 'User-group-subjects',
-					route: { name: 'UserGroupSubjects' },
-				},
-			],
-			studentRoutes: [
-				{
-					name: 'Moje oceny',
-					route: { name: 'Grades' },
-				},
-				{
-					name: 'Grupy ucznia',
-					route: {
-						name: 'UserGroups',
-						params: { userID: this.$store.state.user.id },
-					},
-				},
-				{
-					name: 'Przedmioty ucznia',
-					route: {
-						name: 'StudentSubjects',
-						params: { userID: this.$store.state.user.id },
-					},
-				},
-			],
-			sharedTeacherStudentRoutes: [
-				{
-					name: 'Testy',
-					route: { name: 'Tests' },
-				},
-				// {
-				// 	name: 'Przedmioty',
-				// 	route: { name: 'Subjects' },
-				// },
-				// {
-				// 	name: 'Grupy',
-				// 	route: { name: 'Groups' },
-				// },
-				{
-					name: 'Do oceny',
-					route: { name: 'TestsReadyToRate' },
-				},
-			],
-		};
-	},
 	computed: {
+
+		studentRoutes(){ return [
+			{
+				name: 'Moje oceny',
+				route: { name: 'Grades' },
+			},
+			{
+				name: 'Grupy ucznia',
+				route: {
+					name: 'UserGroups',
+					params: { userID: this.$store.state.user.id },
+				},
+			},
+			{
+				name: 'Przedmioty ucznia',
+				route: {
+					name: 'StudentSubjects',
+					params: { userID: this.$store.state.user.id },
+				},
+			},
+		]},
+		sharedTeacherStudentRoutes(){ return[
+			{
+				name: 'Testy',
+				route: { name: 'Tests' },
+			},
+			// {
+			// 	name: 'Przedmioty',
+			// 	route: { name: 'Subjects' },
+			// },
+			// {
+			// 	name: 'Grupy',
+			// 	route: { name: 'Groups' },
+			// },
+			{
+				name: 'Do oceny',
+				route: { name: 'TestsReadyToRate' },
+			},
+		]},
+		adminRoutes:()=> [],
+		teacherRoutes(){ return [
+			{
+				name: 'Wyniki',
+				route: { name: 'Results' },
+			},
+			{
+				name: 'Grupy nauczyciela',
+				route: {
+					name: 'TeacherGroups',
+					params: { teacherID: this.$store.state.user.id },
+				},
+			},
+			{
+				name: 'Przedmioty nauczyciela',
+				route: {
+					name: 'TeacherSubjects',
+					params: { teacherID: this.$store.state.user.id },
+				},
+			},
+			{
+				name: 'User-group-subjects',
+				route: { name: 'UserGroupSubjects' },
+			},
+		]},
+		defaultRoutes: ()=> [
+			{
+				name: 'Logowanie',
+				route: { name: 'Login' },
+			},
+			{
+				name: 'Rejestracja',
+				route: { name: 'Register' },
+			},
+		],
+
 		currentRoutes() {
 			if (this.$store.getters.isLoggedIn) {
 				switch (this.$store.getters.userRole) {
@@ -120,6 +118,10 @@ export default {
 			}
 			return this.defaultRoutes;
 		},
+	},
+	data() {
+		return {
+		};
 	},
 	methods: {
 		logout() {
