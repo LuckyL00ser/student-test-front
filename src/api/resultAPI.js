@@ -13,7 +13,7 @@ export const getResultWIthMarkListByUserIdAndSubjectName = async (groupId,isMark
 	axios.get(`/result/teacher/subject/group/isMark?groupId=${groupId}&isMark=${isMark}&subjectId=${subjectId}&teacherId=${teacherId}`);
 
 export const sendTestAnswers = async(answerList,generateTestId,userId)=>
-	axios.post(`/result/user/answerList?generateTestId=${generateTestId}&userId=${userId}`,answerList);
+	axios.post(`/result/user/answerList?generateTestId=${generateTestId}&userId=${userId}`,answerList,{headers: {'Content-Type': 'application/json'}});
 
 export const getNextTermResult = async(answerList,resultId)=>
 	axios.get(`/result/user/answerList/nextTerm?answerList=${answerList}&resultId=${resultId}`)

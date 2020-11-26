@@ -102,7 +102,7 @@ export default {
 			clearInterval(this.timer);
 			this.testSent = true;
 			try {
-				await sendTestAnswers(JSON.stringify(this.questions),this.questions[0].testId,this.$store.state.user.id);
+				await sendTestAnswers(JSON.stringify(this.questions.reduce((acc,item)=>[...acc,...item.answerList],[])),this.questions[0].testId,this.$store.state.user.id);
 			} catch (e) {
 				this.$store.toast('danger', 'Błąd podczas generowania testu');
 			}

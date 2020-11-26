@@ -1,7 +1,7 @@
 <template>
 	<div>
-		<h2>Testy oczekujace do oceny</h2>
-		<TestsList :data="tests" :extra-fields="extraFields" :loading="loading">
+		<h2>Testy które wypełniłeś</h2>
+		<TestsList :data="tests.map(x=>x.test)"  :loading="loading">
 			<template v-slot:actions="{ data }">
 				<template v-if="$store.state.user.role == 'teacher'">
 					<router-link
@@ -16,9 +16,11 @@
 
 <script>
 import { getGenerateTestByUser } from '../../api/generateTestAPI';
+import TestsList from '../../components/Tests/TestsList';
 
 export default {
-	name: 'Grades',
+	name: 'TestsReadyToRate',
+	components: { TestsList },
 	data() {
 		return {
 			tests: [],
@@ -29,10 +31,10 @@ export default {
 		this.getTests();
 	},
 	methods: {
-		getTests() {
+		async getTests() {
 			this.loading = true;
 			try {
-				let response = getGenerateTestByUser(this.$store.state.user.id); //zjebane gówno
+				let response = await getGenerateTestByUser(this.$store.state.user.id);
 				this.tests = response.data;
 			} catch (e) {
 				this.$store.toast('danger', e);
