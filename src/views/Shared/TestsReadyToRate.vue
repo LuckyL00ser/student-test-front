@@ -1,11 +1,7 @@
 <template>
 	<div>
 		<h2>Testy oczekujace do oceny</h2>
-		<TestsList
-			:data="exampleTests"
-			:extra-fields="extraFields"
-			:loading="loading"
-		>
+		<TestsList :data="tests" :extra-fields="extraFields" :loading="loading">
 			<template v-slot:actions="{ data }">
 				<template v-if="$store.state.user.role == 'teacher'">
 					<router-link
@@ -19,66 +15,29 @@
 </template>
 
 <script>
-import TestsList from '../../components/Tests/TestsList';
+import { getGenerateTestByUser } from '../../api/generateTestAPI';
+
 export default {
-	name: 'TestsReadyToRate',
-	components: { TestsList },
+	name: 'Grades',
 	data() {
 		return {
-			extraFields: [
-				{
-					label: 'Student',
-					key: 'student',
-					formatter: student => student.name,
-				},
-				{
-					label: 'Wypełniono',
-					key: 'created_at',
-					formatter: date => date.toLocaleString(),
-				},
-			],
-			exampleTests: [
-				{
-					id: 1,
-					name: 'Systemy rozproszone',
-					time: '12',
-					created_at: new Date('2012/10/12'),
-					student: {
-						name: 'Karol',
-					},
-				},
-				{
-					id: 2,
-					name: 'Fizyka',
-					time: '35',
-					created_at: new Date('2020/10/05'),
-					student: {
-						name: 'Kamil',
-					},
-				},
-				{
-					id: 3,
-					name: 'Inzynieria Systemow',
-					time: '22',
-					created_at: new Date('2020/09/23'),
-					student: {
-						name: 'Wojtek',
-					},
-				},
-			],
+			tests: [],
 			loading: false,
 		};
 	},
+	mounted() {
+		this.getTests();
+	},
 	methods: {
-		async deleteTest(id) {
+		getTests() {
+			this.loading = true;
 			try {
-				//TODO: api call
-				this.exampleTests.splice(id, 1);
-				this.$store.toast('success', 'Usunięto test');
-				this.$emit('testDeleted', id);
+				let response = getGenerateTestByUser(this.$store.state.user.id); //zjebane gówno
+				this.tests = response.data;
 			} catch (e) {
-				this.$store.toast('danger', 'Niepowodzenie ususwania testu' + e);
+				this.$store.toast('danger', e);
 			}
+			this.loading = false;
 		},
 	},
 };

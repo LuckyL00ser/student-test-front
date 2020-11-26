@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { getAllGroups } from '../../api/groupAPI';
+import {  getTeacherGroups } from '../../api/groupAPI';
 
 export default {
 	name: 'GroupSelector',
@@ -34,7 +34,7 @@ export default {
 
 		async getGroups() {
 			try {
-				const response = await getAllGroups();
+				const response = await getTeacherGroups(this.$store.state.user.id);
 				this.groups = response.data;
 			} catch (e) {
 				this.$store.toast('danger', e);

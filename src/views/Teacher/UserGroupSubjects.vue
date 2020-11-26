@@ -11,26 +11,9 @@
 		</router-link>
 		<UserGroupSubjectList :data="userGroupSubjects" :loading="loading">
 			<template v-slot:actions="{ data }">
-				<router-link
-					:to="{
-						name: 'UserGroupSubjectDetails',
-						params: { userGroupSubjectID: data.item.id },
-					}"
+				<b-btn variant="danger" @click="deleteUserGroupSubject(data.item.id)"
+					>Usuń</b-btn
 				>
-					Szczegóły
-				</router-link>
-				<template v-if="$store.getters.userRole == 'ROLE_TEACHER'">
-					<router-link
-						:to="{
-							name: 'EditUserGroupSubject',
-							params: { userGroupSubjectID: data.item.id },
-						}"
-						>Edytuj
-					</router-link>
-					<b-btn variant="danger" @click="deleteUserGroupSubject(data.item.id)"
-						>Usuń</b-btn
-					>
-				</template>
 			</template>
 		</UserGroupSubjectList>
 	</div>
@@ -44,7 +27,7 @@ import {
 } from '../../api/userGroupSubjectAPI';
 
 export default {
-	name: 'Groups',
+	name: 'UserGroupSubjects',
 	components: { UserGroupSubjectList },
 	data() {
 		return {

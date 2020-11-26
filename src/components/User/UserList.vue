@@ -7,6 +7,9 @@
 		:fields="fields"
 		:busy="loading"
 	>
+		<template v-slot:cell(email)="data">
+			<a :href="`mailto:${data.item.email}`">{{data.item.email}}</a>
+		</template>
 		<template v-slot:cell(actions)="data">
 			<slot name="actions" :data="data"></slot>
 		</template>
@@ -22,7 +25,7 @@
 import Loader from '../common/Loader';
 
 export default {
-	name: 'UserGroupSubjectList',
+	name: 'UserList',
 	components: { Loader },
 	props: {
 		data: {
@@ -42,23 +45,29 @@ export default {
 		return {
 			fields: [
 				{
-					label: 'Grupa',
-					key: 'groupByGroupId',
+					label: 'Imię i nazwisko',
+					key: 'name',
+					sortable: true,
+					formatter: (value,key,item) => `${item.name} ${item.lastname}`
+				},
+				{
+					label: 'Wydział',
+					key: 'department',
 					sortable: true,
 				},
 				{
-					label: 'Przedmiot',
-					key: 'subjectBySubjectId',
+					label: 'Stopień',
+					key: 'degree',
 					sortable: true,
 				},
 				{
-					label: 'Nauczyciel',
-					key: 'userByTeacherId',
+					label: 'Kierunek',
+					key: 'major',
 					sortable: true,
 				},
 				{
-					label: 'Student',
-					key: 'userByUserId',
+					label: 'E-mail',
+					key: 'email',
 					sortable: true,
 				},
 				...this.extraFields,

@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { getAllSubjects } from '../../api/subjectAPI';
+	import {  getTeacherSubjects } from '../../api/subjectAPI';
 
 export default {
 	name: 'SubjectSelector',
@@ -39,7 +39,7 @@ export default {
 
 		async getSubjects() {
 			try {
-				const response = await getAllSubjects();
+				const response =  await getTeacherSubjects(this.$store.state.user.id);	//only current teacher subjects
 				this.subjects = response.data;
 			} catch (e) {
 				this.$store.toast('danger', e);

@@ -43,26 +43,26 @@ export default {
 			fields: [
 				{
 					label: 'Grupa',
-					key: 'groupByGroupId',
+					key: 'group',
 					formatter: group => group.name,
 					sortable: true,
 				},
 				{
 					label: 'Przedmiot',
-					//	formatter:  subject=>subject.name,
-					key: 'subjectBySubjectId',
+					formatter:  subject=>subject.name,
+					key: 'subject',
 					sortable: true,
 				},
 				{
 					label: 'Nauczyciel',
-					key: 'userByTeacherId',
-					//		formatter:  teacher=>teacher.name + ' ' + teacher.lastname,
+					key: 'userTeacher',
+					formatter:  teacher=>teacher.name + ' ' + teacher.lastname,
 					sortable: true,
 				},
 				{
 					label: 'Student',
-					key: 'userByUserId',
-					//		formatter:  user=>user.name +' '+user.lastname,
+					key: 'user',
+					formatter:  user=>user.name +' '+user.lastname,
 					sortable: true,
 				},
 				...this.extraFields,
