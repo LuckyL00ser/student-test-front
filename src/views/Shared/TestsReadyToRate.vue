@@ -4,7 +4,7 @@
 		<b-form-select class="mb-5" v-model="selected" :options="subjects" v-on:change="getTests()">
 		</b-form-select>
 		<h2>Testy które wypełniłeś</h2>
-		<TestsList :data="tests"  :loading="loading">
+		<TestsList :data="tests" :loading="loading">
 			<template v-slot:actions="{ data }">
 				<template v-if="$store.state.user.role == 'teacher'">
 					<router-link
@@ -20,7 +20,7 @@
 <script>
 // import { getGenerateTestByUser } from '../../api/generateTestAPI';
 import { getTestsByUserAndSubjectId } from '../../api/testAPI';
-import { getStudentSubjects } from '../../api/subjectAPI';
+import { getStudentSubjects, getTeacherSubjects } from '../../api/subjectAPI';
 import TestsList from '../../components/Tests/TestsList';
 
 export default {
@@ -41,9 +41,7 @@ export default {
 		async getTests() {
 			this.loading = true;
 			try {
-				console.log(this.selected);
 				let response = await getTestsByUserAndSubjectId(this.$store.state.user.id, this.selected);
-				console.log(response.data);
 				this.tests = response.data;
 			} catch (e) {
 				this.$store.toast('danger', e);
@@ -52,7 +50,12 @@ export default {
 		},
 		async getSubjects() {
 			try {
-				let response = await getStudentSubjects(this.$store.state.user.id);
+				let response;
+				if (this.$store.state.user.role == 'teacher') {
+					response = await getTeacherSubjects(this.$store.state.user.id);
+				} else {
+					response = await getStudentSubjects(this.$store.state.user.id);
+				}
 				Object.keys(response.data).forEach(key => {
 					this.subjects.push({
 						value: response.data[key].id,
