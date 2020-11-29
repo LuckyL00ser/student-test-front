@@ -8,7 +8,7 @@
 		:busy="loading"
 	>
 		<template v-slot:cell(email)="data">
-			<a :href="`mailto:${data.item.email}`">{{data.item.email}}</a>
+			<a :href="`mailto:${data.item.email}`">{{ data.item.email }}</a>
 		</template>
 		<template v-slot:cell(actions)="data">
 			<slot name="actions" :data="data"></slot>
@@ -48,7 +48,7 @@ export default {
 					label: 'Imię i nazwisko',
 					key: 'name',
 					sortable: true,
-					formatter: (value,key,item) => `${item.name} ${item.lastname}`
+					formatter: (value, key, item) => `${item.name} ${item.lastname}`,
 				},
 				{
 					label: 'Wydział',

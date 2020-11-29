@@ -4,6 +4,7 @@ import Subjects from '../views/Shared/Subjects';
 import SubjectDetails from '../views/Shared/SubjectDetails';
 import Groups from '../views/Shared/Groups';
 import GroupDetails from '../views/Shared/GroupDetails';
+import GenerateTest from '../views/Shared/GenerateTest';
 
 export default [
 	//Teacher Student Shared Routes:
@@ -51,6 +52,14 @@ export default [
 		path: '/groups/:groupID',
 		name: 'GroupDetails',
 		component: GroupDetails,
+		meta: {
+			requiresAuth: true,
+		},
+	},
+	{
+		path: '/generate-test/:generateTestId',
+		name: 'GenerateTestDetails',
+		component: GenerateTest,
 		meta: {
 			requiresAuth: true,
 		},

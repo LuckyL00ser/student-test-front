@@ -49,20 +49,20 @@ export default {
 				},
 				{
 					label: 'Przedmiot',
-					formatter:  subject=>subject.name,
+					formatter: subject => subject.name,
 					key: 'subject',
 					sortable: true,
 				},
 				{
 					label: 'Nauczyciel',
 					key: 'userTeacher',
-					formatter:  teacher=>teacher.name + ' ' + teacher.lastname,
+					formatter: teacher => teacher.name + ' ' + teacher.lastname,
 					sortable: true,
 				},
 				{
 					label: 'Student',
 					key: 'user',
-					formatter:  user=>user.name +' '+user.lastname,
+					formatter: user => user.name + ' ' + user.lastname,
 					sortable: true,
 				},
 				...this.extraFields,

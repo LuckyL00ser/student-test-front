@@ -39,7 +39,9 @@ export default {
 	data() {
 		return {
 			loading: false,
-			form: {},
+			form: {
+				founderId: this.$store.state.user.id
+			},
 		};
 	},
 	mounted() {

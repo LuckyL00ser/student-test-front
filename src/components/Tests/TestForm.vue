@@ -28,7 +28,9 @@
 				<b-row>
 					<ValidationProvider rules="required" v-slot="vContext" class="col-6">
 						<b-form-group label="Przedmiot">
-							<SubjectSelector v-model="form.subjectId" :disabled="!!testID" />
+							<SubjectSelector v-model="form.subjectId" v-if="!testID"/>
+							<SubjectSelector v-model="form.subject.id" :disabled="true" v-else/>
+
 							<CustomInvalidFeedback :validation-context="vContext" />
 						</b-form-group>
 					</ValidationProvider>
@@ -84,7 +86,9 @@ export default {
 	data() {
 		return {
 			loading: false,
-			form: {},
+			form: {
+				subject: {}
+			},
 		};
 	},
 	mounted() {

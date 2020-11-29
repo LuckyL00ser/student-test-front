@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import {  getTeacherGroups } from '../../api/groupAPI';
+import { getTeacherGroups } from '../../api/groupAPI';
 
 export default {
 	name: 'GroupSelector',

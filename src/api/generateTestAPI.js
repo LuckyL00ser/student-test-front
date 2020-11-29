@@ -1,7 +1,7 @@
 import { axios } from '@/helpers/axiosConfig';
 
 export const getAllGenerateTest = async () => axios.get('/generateTest');
-// export const getTest = async id => axios.get(`/test/${id}`);
+export const getGenerateTest = async id => axios.get(`/generateTest/${id}`);
 // export const createTest = async data => axios.post(`/test`, data);
 // export const updateTest = async (testID, data) =>
 // 	axios.put(`/test/${testID}`, data);

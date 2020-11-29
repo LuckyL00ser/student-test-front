@@ -5,7 +5,7 @@ export const getGroup = async id => axios.get(`/group/${id}`);
 export const getStudentGroups = async studentID =>
 	axios.get(`/group/student/${studentID}`);
 export const getTeacherGroups = async teacherID =>
-	axios.get(`group/teacher/${teacherID}`);
+	axios.get(`group/founder/${teacherID}`);
 
 export const createGroup = async data => axios.post(`/group`, data);
 export const updateGroup = async (groupID, data) =>

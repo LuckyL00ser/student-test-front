@@ -30,71 +30,76 @@
 export default {
 	name: 'Navbar',
 	computed: {
-
-		studentRoutes(){ return [
-			{
-				name: 'Moje oceny',
-				route: { name: 'Grades' },
-			},
-			{
-				name: 'Grupy ucznia',
-				route: {
-					name: 'UserGroups',
-					params: { userID: this.$store.state.user.id },
+		studentRoutes() {
+			return [
+				{
+					name: 'Moje oceny',
+					route: { name: 'Grades' },
 				},
-			},
-			{
-				name: 'Przedmioty ucznia',
-				route: {
-					name: 'StudentSubjects',
-					params: { userID: this.$store.state.user.id },
+				{
+					name: 'Grupy ucznia',
+					route: {
+						name: 'UserGroups',
+						params: { userID: this.$store.state.user.id },
+					},
 				},
-			},
-		]},
-		sharedTeacherStudentRoutes(){ return[
-			{
-				name: 'Testy',
-				route: { name: 'Tests' },
-			},
-			// {
-			// 	name: 'Przedmioty',
-			// 	route: { name: 'Subjects' },
-			// },
-			// {
-			// 	name: 'Grupy',
-			// 	route: { name: 'Groups' },
-			// },
-			{
-				name: 'Do oceny',
-				route: { name: 'TestsReadyToRate' },
-			},
-		]},
-		adminRoutes:()=> [],
-		teacherRoutes(){ return [
-			{
-				name: 'Wyniki',
-				route: { name: 'Results' },
-			},
-			{
-				name: 'Grupy nauczyciela',
-				route: {
-					name: 'TeacherGroups',
-					params: { teacherID: this.$store.state.user.id },
+				{
+					name: 'Przedmioty ucznia',
+					route: {
+						name: 'StudentSubjects',
+						params: { userID: this.$store.state.user.id },
+					},
 				},
-			},
-			{
-				name: 'Przedmioty nauczyciela',
-				route: {
-					name: 'TeacherSubjects',
-					params: { teacherID: this.$store.state.user.id },
+			];
+		},
+		sharedTeacherStudentRoutes() {
+			return [
+				{
+					name: 'Testy',
+					route: { name: 'Tests' },
 				},
-			},
-			{
-				name: 'User-group-subjects',
-				route: { name: 'UserGroupSubjects' },
-			},
-		]},
-		defaultRoutes: ()=> [
+				// {
+				// 	name: 'Przedmioty',
+				// 	route: { name: 'Subjects' },
+				// },
+				// {
+				// 	name: 'Grupy',
+				// 	route: { name: 'Groups' },
+				// },
+				{
+					name: 'Do oceny',
+					route: { name: 'TestsReadyToRate' },
+				},
+			];
+		},
+		adminRoutes: () => [],
+		teacherRoutes() {
+			return [
+				{
+					name: 'Wyniki',
+					route: { name: 'Results' },
+				},
+				{
+					name: 'Grupy nauczyciela',
+					route: {
+						name: 'TeacherGroups',
+						params: { teacherID: this.$store.state.user.id },
+					},
+				},
+				{
+					name: 'Przedmioty nauczyciela',
+					route: {
+						name: 'TeacherSubjects',
+						params: { teacherID: this.$store.state.user.id },
+					},
+				},
+				{
+					name: 'User-group-subjects',
+					route: { name: 'UserGroupSubjects' },
+				},
+			];
+		},
+		defaultRoutes: () => [
 			{
 				name: 'Logowanie',
 				route: { name: 'Login' },
@@ -120,8 +125,7 @@ export default {
 		},
 	},
 	data() {
-		return {
-		};
+		return {};
 	},
 	methods: {
 		logout() {

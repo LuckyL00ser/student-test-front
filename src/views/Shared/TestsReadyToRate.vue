@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<h2>Testy które wypełniłeś</h2>
-		<TestsList :data="tests.map(x=>x.test)"  :loading="loading">
+		<TestsList :data="tests.map(x => x.test)" :loading="loading">
 			<template v-slot:actions="{ data }">
 				<template v-if="$store.state.user.role == 'teacher'">
 					<router-link

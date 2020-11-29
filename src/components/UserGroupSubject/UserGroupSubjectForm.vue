@@ -2,19 +2,28 @@
 	<div>
 		<UserList :data="students" :loading="usersLoading">
 			<template v-slot:actions="{ data }">
-				<b-button @click="selectStudent(data.item)" v-b-modal.modal-1>Dodaj do grupy</b-button>
+				<b-button @click="selectStudent(data.item)" v-b-modal.modal-1
+					>Dodaj do grupy</b-button
+				>
 			</template>
 		</UserList>
-		<b-modal id="modal-1" title="Wybierz grupę i przedmiot dla studenta" hide-footer :no-close-on-backdrop="loading" :no-close-on-esc="loading" :hide-header-close="loading">
-			<p class="my-4">Dla:
-				{{ selectedStudent.name }} {{ selectedStudent.lastname }}
+		<b-modal
+			id="modal-1"
+			title="Wybierz grupę i przedmiot dla studenta"
+			hide-footer
+			:no-close-on-backdrop="loading"
+			:no-close-on-esc="loading"
+			:hide-header-close="loading"
+		>
+			<p class="my-4">
+				Dla: {{ selectedStudent.name }} {{ selectedStudent.lastname }}
 			</p>
 			<ValidationObserver v-slot="{ handleSubmit }" ref="form">
 				<b-form @submit.prevent="handleSubmit(submit)">
 					<ValidationProvider
-							rules="required"
-							class="flex-grow-1"
-							v-slot="vContext"
+						rules="required"
+						class="flex-grow-1"
+						v-slot="vContext"
 					>
 						<b-form-group label="Przedmiot">
 							<SubjectSelector v-model="form.subjectId" />
@@ -22,9 +31,9 @@
 						</b-form-group>
 					</ValidationProvider>
 					<ValidationProvider
-							rules="required"
-							class="flex-grow-1"
-							v-slot="vContext"
+						rules="required"
+						class="flex-grow-1"
+						v-slot="vContext"
 					>
 						<b-form-group label="Grupa">
 							<GroupSelector :teacher="false" v-model="form.groupId" />
@@ -33,18 +42,17 @@
 					</ValidationProvider>
 					<div class="">
 						<b-btn
-								squared
-								variant="outline-primary"
-								:disabled="loading"
-								class="shadow"
-								type="submit"
-						>{{ userGroupSubjectId ? 'Zapisz' : 'Dodaj' }}
+							squared
+							variant="outline-primary"
+							:disabled="loading"
+							class="shadow"
+							type="submit"
+							>{{ userGroupSubjectId ? 'Zapisz' : 'Dodaj' }}
 						</b-btn>
 					</div>
 				</b-form>
 			</ValidationObserver>
 		</b-modal>
-
 	</div>
 </template>
 

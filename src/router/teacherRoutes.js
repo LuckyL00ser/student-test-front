@@ -13,6 +13,7 @@ import AddUserGroupSubject from '../views/Teacher/AddUserGroupSubject';
 import EditUserGroupSubject from '../views/Teacher/EditUserGroupSubject';
 import UserGroupSubjectDetails from '../views/Teacher/UserGroupSubjectDetails';
 import UserGroupSubjects from '../views/Teacher/UserGroupSubjects';
+import RateTest from '../views/Teacher/RateTest';
 
 export default [
 	//Teacher Routes:
@@ -147,6 +148,15 @@ export default [
 		path: '/user-group-subjects',
 		name: 'UserGroupSubjects',
 		component: UserGroupSubjects,
+		meta: {
+			requiresAuth: true,
+			requiresTeacher: true,
+		},
+	},
+	{
+		path: '/rate-test/:resultId',
+		name: 'RateTest',
+		component: RateTest,
 		meta: {
 			requiresAuth: true,
 			requiresTeacher: true,
