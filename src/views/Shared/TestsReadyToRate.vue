@@ -19,7 +19,6 @@
 </template>
 
 <script>
-// import { getGenerateTestByUser } from '../../api/generateTestAPI';
 import { getTestsByUserAndSubjectId } from '../../api/testAPI';
 import { getStudentSubjects, getTeacherSubjects } from '../../api/subjectAPI';
 import TestsList from '../../components/Tests/TestsList';
