@@ -61,6 +61,7 @@
 									class="h-100"
 									v-else
 									placeholder="Odpowiedź opisowa"
+									v-model="question.answerList[0].answer"
 								></b-textarea>
 							</b-col>
 						</b-row>
@@ -104,7 +105,20 @@ export default {
 				createGenerateTest(this.$route.params.testID),
 				getTest(this.$route.params.testID),
 			]);
-			this.questions = questions.data;
+			this.questions = questions.data.map(x => {
+				if (x.type !== 'TextQuestion') return x;
+				return {
+					...x,
+					answerList: [
+						{
+							answer: '',
+							correct: true,
+							taskId:x.id,
+							id:null
+						},
+					],
+				};
+			});
 			this.test = test.data;
 			this.timeLeft = this.test.time * 60;
 			this.calcTime();
