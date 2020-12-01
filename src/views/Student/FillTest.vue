@@ -45,14 +45,17 @@
 							</b-col>
 							<b-col class="col-12 col-lg-6  h-100 pb-2">
 								<ul v-if="question.type != 'TextQuestion'">
-									<li v-for="answer in question.answerList" :key="answer.id">
+									<li v-for="(answer) in question.answerList" :key="answer.id">
 										<b-radio
 											:name="question.id.toString()"
 											v-if="question.type == 'SingleChoiceQuestion'"
+											v-model="answer.correct"
+											:value="true"
 											>{{ answer.answer }}</b-radio
 										>
 										<b-checkbox
 											v-else-if="question.type == 'MultipleChoiceQuestion'"
+											v-model="answer.correct"
 											>{{ answer.answer }}</b-checkbox
 										>
 									</li>
@@ -101,25 +104,22 @@ export default {
 	},
 	async mounted() {
 		try {
-			const [questions, test] = await Promise.all([
-				createGenerateTest(this.$route.params.testID),
-				getTest(this.$route.params.testID),
-			]);
-			this.questions = questions.data.map(x => {
-				if (x.type !== 'TextQuestion') return x;
-				return {
-					...x,
-					answerList: [
-						{
-							answer: '',
-							correct: true,
-							taskId:x.id,
-							id:null
-						},
-					],
-				};
-			});
+			const test = await getTest(this.$route.params.testID);
 			this.test = test.data;
+			const questions = await createGenerateTest(this.$route.params.testID,test.fullPoints)
+			this.questions = questions.data;
+			this.questions.forEach(x => {
+				x.answerList.forEach(a=>a.correct=false)
+				if(x.type==='TextQuestion'){
+					x.answerList = [{
+						id: null,
+						correct: true,
+						answer:'',
+						taskId:x.id
+					}]
+				}
+			});
+
 			this.timeLeft = this.test.time * 60;
 			this.calcTime();
 		} catch (e) {
@@ -144,7 +144,7 @@ export default {
 				await sendTestAnswers(
 					JSON.stringify(
 						this.questions.reduce(
-							(acc, item) => [...acc, ...item.answerList],
+							(acc, item) => [...acc, ...item.answerList.filter(x=>x.correct)],
 							[],
 						),
 					),

@@ -11,7 +11,6 @@
 			<router-link :to="{name: 'EditTest',params: {testID:data.item.generateTest.test.id}}">{{data.item.generateTest.test.name}}</router-link>
 		</template>
 		<template v-slot:cell(actions)="data">
-			akcje {{data.item.id}}
 			<router-link :to="{name:'GenerateTestDetails',params: {generateTestId:data.item.generateTest.id}}" v-if="data.item.mark">
 				Zobacz odpowiedzi
 			</router-link>
@@ -56,11 +55,11 @@ export default {
 					label: 'Punkty',
 					key: 'points'
 				},
-				{
-					label: 'Czy poprawiał?',
-					key: 'result',
-					formatter: item=>item?`Tak - poprzednio (${item})pkt`:''
-				},
+				// {
+				// 	label: 'Czy poprawiał?',
+				// 	key: 'result',
+				// 	formatter: item=>item?`Tak - poprzednio (${item})pkt`:''
+				// },
 				{
 					key: 'actions',
 					label: 'Akcje'

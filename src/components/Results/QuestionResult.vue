@@ -1,56 +1,125 @@
 <template>
-    <div>
-        <div
-                class="mb-2 w-100"
-                v-for="(question) in questionResult.taskDTO.answerList"
-                :key="question.id"
-        >
-            <div class="h-100 d-flex flex-column">
-                <div
-                        class="d-flex justify-content-between align-items-center w-100"
-                >
-                    <h4>{{ question.question }}</h4>
-                </div>
-                <b-row class="flex-grow-1">
-                    <b-col
-                            class="col-12 col-md-6 col-lg-4 h-100"
-                            v-if="question.image"
-                    >
-                        <img :src="question.image" alt="obrazek pytanie" />
-                    </b-col>
-                    <b-col class="col-12 col-lg-6  h-100 pb-2">
-                        <ul v-if="question.type != 'TextQuestion'">
-                            <li v-for="answer in question.answerList" :key="answer.id">
-                                <b-radio
-                                        :name="question.id.toString()"
-                                        v-if="question.type == 'SingleChoiceQuestion'"
-                                >{{ answer.answer }}</b-radio
-                                >
-                                <b-checkbox
-                                        v-else-if="question.type == 'MultipleChoiceQuestion'"
-                                >{{ answer.answer }}</b-checkbox
-                                >
-                            </li>
-                        </ul>
-                        <b-textarea
-                                class="h-100"
-                                v-else
-                                placeholder="Odpowiedź opisowa"
-                        ></b-textarea>
-                    </b-col>
-                </b-row>
-            </div>
-        </div>
-    </div>
+	<div>
+		<div class="mb-2 w-100">
+			<div class="h-100 d-flex flex-column">
+				<div class="d-flex justify-content-between align-items-center w-100">
+					<h4>{{ questionResult.taskDTO.question }}</h4>
+					<b
+						>max.
+						{{
+							questionResult.chosenAnswers[0].generateTasksByGenerateTaskId
+								.tasksByTaskId.points
+						}}
+						pkt</b
+					>
+				</div>
+				<b-row class="flex-grow-1">
+					<b-col
+						class="col-12 col-md-6 col-lg-4 h-100"
+						v-if="questionResult.taskDTO.image"
+					>
+						<img :src="questionResult.taskDTO.image" alt="obrazek pytanie" />
+					</b-col>
+					<b-col class="col-12 col-lg-6  h-100 pb-2">
+						<ul v-if="questionResult.taskDTO.type != 'TextQuestion'">
+							<li
+								v-for="(answer) in questionResult.taskDTO.answerList"
+								:key="answer.id"
+                                :class="(!!questionResult.chosenAnswers.find(x=>x.answerByAnswerId.id==answer.id && answer.correct )) ^ (!answer.correct) ?'correct':'incorrect'"
+							>
+
+								<b-radio
+									disabled
+									:value="!!questionResult.chosenAnswers.find(x=>x.answerByAnswerId.id==answer.id)"
+									v-if="
+										questionResult.taskDTO.type == 'SingleChoiceQuestion'
+									"
+									>{{ answer.answer }}</b-radio
+								>
+								<b-checkbox
+									disabled
+                                    :checked="!!questionResult.chosenAnswers.find(x=>x.answerByAnswerId.id==answer.id)"
+									v-else-if="
+										questionResult.taskDTO.type ==
+											'MultipleChoiceQuestion'
+									"
+									>{{ answer.answer }}</b-checkbox
+								>
+							</li>
+						</ul>
+						<div v-else>
+							<b-textarea
+								class="h-100"
+								disabled
+								v-model="questionResult.chosenAnswers[0].descriptedAnswer"
+								placeholder="Odpowiedź opisowa"
+							></b-textarea>
+							<div class="d-flex align-items-center my-2" v-if="!sent">
+								Punkty:
+								<b-spinbutton
+									v-model="points"
+									min="0"
+									class="mx-2 "
+									:max="
+										questionResult.chosenAnswers[0]
+											.generateTasksByGenerateTaskId.tasksByTaskId.points
+									"
+								></b-spinbutton>
+								<b-btn
+									:disabled="loading"
+									variant="success"
+									@click="postPoints(points)"
+									>Oceń</b-btn
+								>
+							</div>
+						</div>
+					</b-col>
+				</b-row>
+			</div>
+		</div>
+	</div>
 </template>
 
 <script>
-	export default {
-		name: 'QuestionResult',
-      props: ['questionResult']
-	};
+import { axios } from '@/helpers/axiosConfig';
+export default {
+	name: 'QuestionResult',
+	props: ['questionResult', 'resultId'],
+	data() {
+		return {
+			points: 0,
+			loading: false,
+			sent: false,
+		};
+	},
+	methods: {
+		async postPoints(points) {
+			this.loading = true;
+			try {
+				await axios.post(
+					`/result/points?points=${points}&resultId=${this.resultId}`,
+					points,
+				);
+				this.$store.toast('success', 'Dodano punkty');
+				this.sent = true;
+			} catch (e) {
+				this.$store.toast('error', e);
+			}
+			this.loading = false;
+		},
+	},
+};
 </script>
 
 <style scoped>
+ul {
+	list-style: none;
+}
+.correct {
+	color: green !important;
 
+}
+.incorrect {
+	color: darkred !important;
+}
 </style>

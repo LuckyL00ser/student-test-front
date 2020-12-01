@@ -39,7 +39,7 @@
 						v-slot="vContext"
 						class="col-6"
 					>
-						<b-form-group label="Ilość punktów do zdobycia">
+						<b-form-group label="Ilość pytań">
 							<b-form-spinbutton
 								v-model="form.fullPoints"
 								min="1"
@@ -87,6 +87,8 @@ export default {
 		return {
 			loading: false,
 			form: {
+				fullPoints: 1,
+				time: 1,
 				subject: {}
 			},
 		};

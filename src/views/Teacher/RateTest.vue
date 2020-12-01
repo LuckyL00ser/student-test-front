@@ -9,7 +9,9 @@
 				>
 			</p>
 			<p>Test: {{ result.generateTest.test.name }}</p>
-			<b-card> </b-card>
+			<b-card>
+				<QuestionResult v-for="(task,index) in tasks" :key="index" :question-result="task" :result-id="resultId"/>
+			</b-card>
 		</div>
 	</div>
 </template>
@@ -17,9 +19,11 @@
 <script>
 import { getResult } from '../../api/resultAPI';
 import { getGenerateTaskByGenerateTestId } from '../../api/generateTaskAPI';
+import QuestionResult from '../../components/Results/QuestionResult';
 
 export default {
 	name: 'RateTest',
+	components: { QuestionResult },
 	data() {
 		return {
 			result: null,
