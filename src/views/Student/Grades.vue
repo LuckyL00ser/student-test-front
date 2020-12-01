@@ -1,21 +1,16 @@
 <template>
 	<div>
-		<div>
-			moje oceny
-		</div>
-		<!--		<TestsList :data="tests">-->
-		<!--			<template>-->
-		<!--				<router-link>Zobacz szczegóły </router-link>-->
-		<!--			</template>-->
-		<!--		</TestsList>-->
+		<ResultsList :loading="loading" :results="tests" />
 	</div>
 </template>
 
 <script>
-import { getGenerateTestByUser } from '../../api/generateTestAPI';
+import { getAllResults } from '../../api/resultAPI';
+import ResultsList from '../../components/Results/ResultsList';
 
 export default {
 	name: 'Grades',
+	components: { ResultsList },
 	data() {
 		return {
 			tests: [],
@@ -26,11 +21,11 @@ export default {
 		this.getTests();
 	},
 	methods: {
-		getTests() {
+		async getTests() {
 			this.loading = true;
 			try {
-				let response = getGenerateTestByUser(this.$store.state.user.id);
-				this.tests = response.data;
+				let response = await getAllResults();
+				this.tests = response.data.filter(x => x.user.id === this.$store.state.user.id && x.mark !== null);
 			} catch (e) {
 				this.$store.toast('danger', e);
 			}
