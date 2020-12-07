@@ -53,7 +53,7 @@ export default {
 		async getResults() {
 			this.loading = true;
 			try {
-				const results = await getAllResults(this.$store.state.user.id)
+				const results = await getAllResults(this.$store.state.user.id);
 				this.results = results.data;
 			} catch (e) {
 				this.$store.toast('error', e);

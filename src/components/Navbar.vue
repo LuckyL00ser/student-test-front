@@ -66,10 +66,10 @@ export default {
 				// 	name: 'Grupy',
 				// 	route: { name: 'Groups' },
 				// },
-				{
-					name: 'Do oceny',
-					route: { name: 'TestsReadyToRate' },
-				},
+				// {
+				// 	name: 'Do oceny',
+				// 	route: { name: 'TestsReadyToRate' },
+				// },
 			];
 		},
 		adminRoutes: () => [],
