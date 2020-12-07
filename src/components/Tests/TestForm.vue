@@ -113,7 +113,7 @@ export default {
 			try {
 				const response = await testAPI.getTest(this.testID);
 				this.form = response.data;
-				this.form.subjectId = response.data.subjectBySubjectId.id;
+				this.form.subjectId = response.data.subject.id;
 			} catch (e) {
 				this.$store.toast('danger', e);
 			}
