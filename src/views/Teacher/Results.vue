@@ -5,6 +5,10 @@
 			<b-checkbox class=" mx-2" v-model="all">pokaż wszystkie</b-checkbox>
 			<SubjectSelector class="col-6" v-model="selectedSubjectId" :disabled="all" @subjectIDs="assignTeacherSubjects"/>
 		</div>
+		<div class="my-3" v-if="!all && selectedSubjectId">
+			<b-btn class="mr-2" @click="getExcel(selectedSubjectId)">Pobierz wyniki w Excelu</b-btn>
+			<b-btn variant="success" @click="getPDF(selectedSubjectId)">Pobierz wyniki w PDF</b-btn>
+		</div>
 		<b-radio  value="all" v-model="onlyMarked">Wszystkie</b-radio>
 		<b-radio  value="marked_only" v-model="onlyMarked">Tylko ocenione</b-radio>
 		<b-radio  value="unmarked_only" v-model="onlyMarked">Tylko nieocenione</b-radio>
@@ -16,6 +20,7 @@
 import { getAllResults } from '../../api/resultAPI';
 import ResultsList from '../../components/Results/ResultsList';
 import SubjectSelector from '../../components/Subjects/SubjectSelector';
+import {getExcel,getPDF} from '../../api/resultAPI';
 
 export default {
 	name: 'Results',
@@ -50,6 +55,8 @@ export default {
 		}
 	},
 	methods:{
+		getExcel: getExcel,
+		getPDF: getPDF,
 		async getResults() {
 			this.loading = true;
 			try {

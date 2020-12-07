@@ -39,3 +39,6 @@ export const getResultWithMarkListByUserIdAndSubjectName = async (
 	axios.get(
 		`/result/user/subject/isMark?isMark=${isMark}&subjectId=${subjectId}&userId=${userId}`,
 	);
+
+export const getExcel = async (subjectId)=> axios.get(`https://quiz-server-prz.herokuapp.com/result/export/excel/subject/${subjectId}`)
+export const getPDF = async (subjectId)=>  axios.get(`https://quiz-server-prz.herokuapp.com/result/export/pdf/subject/${subjectId}`)

@@ -7,8 +7,7 @@
 					<b
 						>max.
 						{{
-							questionResult.chosenAnswers[0].generateTasksByGenerateTaskId
-								.tasksByTaskId.points
+							questionResult.taskDTO.points
 						}}
 						pkt</b
 					>
@@ -25,17 +24,18 @@
 							<li
 								v-for="(answer) in questionResult.taskDTO.answerList"
 								:key="answer.id"
-                                :class="(!!questionResult.chosenAnswers.find(x=>x.answerByAnswerId.id==answer.id && answer.correct )) ^ (!answer.correct) ?'correct':'incorrect'"
+                                :class="(!!questionResult.chosenAnswers.find(x=>x.answerByAnswerId.id==answer.id && answer.correct ))  ?'correct':'incorrect'"
 							>
 
 								<b-radio
 									disabled
-									:value="!!questionResult.chosenAnswers.find(x=>x.answerByAnswerId.id==answer.id)"
+									:value="answer.id"
+									v-model="chosenAnswer.answerByAnswerId.id"
 									v-if="
 										questionResult.taskDTO.type == 'SingleChoiceQuestion'
 									"
-									>{{ answer.answer }}</b-radio
-								>
+									>{{ answer.answer }}
+								</b-radio>
 								<b-checkbox
 									disabled
                                     :checked="!!questionResult.chosenAnswers.find(x=>x.answerByAnswerId.id==answer.id)"
@@ -54,17 +54,19 @@
 								v-model="questionResult.chosenAnswers[0].descriptedAnswer"
 								placeholder="Odpowiedź opisowa"
 							></b-textarea>
-							<div class="d-flex align-items-center my-2" v-if="!sent">
+							<div class="d-flex align-items-center my-2" v-if="!sent && !disabled">
 								Punkty:
 								<b-spinbutton
+
 									v-model="points"
 									min="0"
 									class="mx-2 "
 									:max="
-										questionResult.chosenAnswers[0]
-											.generateTasksByGenerateTaskId.tasksByTaskId.points
-									"
+																		questionResult.chosenAnswers[0]
+																			.generateTasksByGenerateTaskId.tasksByTaskId.points
+																	"
 								></b-spinbutton>
+
 								<b-btn
 									:disabled="loading"
 									variant="success"
@@ -84,12 +86,21 @@
 import { axios } from '@/helpers/axiosConfig';
 export default {
 	name: 'QuestionResult',
-	props: ['questionResult', 'resultId'],
+	props: ['questionResult', 'resultId','disabled'],
 	data() {
 		return {
 			points: 0,
 			loading: false,
 			sent: false,
+			chosenAnswer: this.questionResult.chosenAnswers.length ? this.questionResult.chosenAnswers[0] : {
+				answerByAnswerId: {
+					id: false
+				},
+				generateTasksByGenerateTaskId: {
+					tasksByTaskId: {points: 0}
+				}
+
+			},
 		};
 	},
 	methods: {
@@ -111,15 +122,17 @@ export default {
 };
 </script>
 
-<style scoped>
+<style >
 ul {
 	list-style: none;
 }
-.correct {
-	color: green !important;
 
+
+.correct label{
+	color: green !important;
 }
-.incorrect {
-	color: darkred !important;
-}
+
+	.incorrect label{
+		color: darkred !important;
+	}
 </style>

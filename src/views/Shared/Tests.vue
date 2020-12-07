@@ -18,7 +18,8 @@
 					</router-link>
 					<b-btn @click="deleteTest(data.item.id)">Usuń</b-btn>
 				</template>
-				<template v-else-if="new Date(data.item.date) < new Date()">
+				<template v-else>
+<!--					-if="new Date(data.item.date) < new Date()"-->
 					<router-link
 						:to="{ name: 'FillTest', params: { testID: data.item.id } }"
 						>Zacznij wypelniac</router-link
