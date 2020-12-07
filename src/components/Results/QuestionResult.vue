@@ -24,7 +24,7 @@
 							<li
 								v-for="(answer) in questionResult.taskDTO.answerList"
 								:key="answer.id"
-                                :class="(!!questionResult.chosenAnswers.find(x=>x.answerByAnswerId.id==answer.id && answer.correct )) ^ (!answer.correct) ?'correct':'incorrect'"
+                                :class="(!!questionResult.chosenAnswers.find(x=>x.answerByAnswerId.id==answer.id && answer.correct ))  ?'correct':'incorrect'"
 							>
 
 								<b-radio
