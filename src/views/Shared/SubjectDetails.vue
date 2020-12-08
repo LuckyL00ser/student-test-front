@@ -14,14 +14,14 @@
 		</div>
 		<TestsList :data="tests" :loading="loading">
 			<template v-slot:actions="{ data }">
-				<!--				<template v-if="$store.getters.userRole == 'TEACHER_ROLE'">-->
-				<router-link
-					:to="{ name: 'EditTest', params: { testID: data.item.id } }"
-					>Edytuj
-				</router-link>
-				<b-btn variant="danger" @click="deleteTest(data.item.id)">Usuń</b-btn>
-				<!--				</template>-->
-				<template v-if="$store.getters.userRole == 'USER_ROLE'">
+				<template v-if="$store.getters.userRole == 'ROLE_TEACHER'">
+					<router-link
+						:to="{ name: 'EditTest', params: { testID: data.item.id } }"
+						>Edytuj
+					</router-link>
+					<b-btn variant="danger" @click="deleteTest(data.item.id)">Usuń</b-btn>
+				</template>
+				<template v-if="$store.getters.userRole == 'ROLE_USER'">
 					<router-link
 						:to="{ name: 'FillTest', params: { testID: data.item.id } }"
 						>Zacznij wypelniac</router-link

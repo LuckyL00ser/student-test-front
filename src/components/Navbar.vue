@@ -94,7 +94,7 @@ export default {
 					},
 				},
 				{
-					name: 'User-group-subjects',
+					name: 'Użytkownicy',
 					route: { name: 'UserGroupSubjects' },
 				},
 			];

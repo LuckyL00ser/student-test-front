@@ -1,3 +1,4 @@
+
 import { axios } from '@/helpers/axiosConfig';
 
 export const getAllTests = async() => axios.get('/test');

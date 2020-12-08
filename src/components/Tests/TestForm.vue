@@ -39,7 +39,7 @@
 						v-slot="vContext"
 						class="col-6"
 					>
-						<b-form-group label="Ilość pytań">
+						<b-form-group label="Ilość losowanych pytań">
 							<b-form-spinbutton
 								v-model="form.fullPoints"
 								min="1"

@@ -40,5 +40,43 @@ export const getResultWithMarkListByUserIdAndSubjectName = async (
 		`/result/user/subject/isMark?isMark=${isMark}&subjectId=${subjectId}&userId=${userId}`,
 	);
 
-export const getExcel = async (subjectId)=> axios.get(`https://quiz-server-prz.herokuapp.com/result/export/excel/subject/${subjectId}`)
-export const getPDF = async (subjectId)=>  axios.get(`https://quiz-server-prz.herokuapp.com/result/export/pdf/subject/${subjectId}`)
+export const getExcel = async subjectId =>
+	axios({
+		url: `https://quiz-server-prz.herokuapp.com/result/export/excel/subject/${subjectId}`,
+		method: 'GET',
+		responseType: 'blob',
+	}).then(response => {
+		var fileURL = window.URL.createObjectURL(new Blob([response.data]));
+		var fileLink = document.createElement('a');
+		fileLink.href = fileURL;
+		fileLink.setAttribute('download', 'wyniki-excel.xlsx');
+		document.body.appendChild(fileLink);
+		fileLink.click();
+	});
+export const getPDF = async subjectId =>
+	axios({
+		url: `https://quiz-server-prz.herokuapp.com/result/export/pdf/subject/${subjectId}`,
+		method: 'GET',
+		responseType: 'blob',
+	}).then(response => {
+		var fileURL = window.URL.createObjectURL(new Blob([response.data]));
+		var fileLink = document.createElement('a');
+		fileLink.href = fileURL;
+		fileLink.setAttribute('download', 'wyniki-pdf.pdf');
+		document.body.appendChild(fileLink);
+		fileLink.click();
+	});
+
+export const getDOCX = async subjectId =>
+	axios({
+		url: `https://quiz-server-prz.herokuapp.com/result/export/docx/subject/${subjectId}`,
+		method: 'GET',
+		responseType: 'blob',
+	}).then(response => {
+		var fileURL = window.URL.createObjectURL(new Blob([response.data]));
+		var fileLink = document.createElement('a');
+		fileLink.href = fileURL;
+		fileLink.setAttribute('download', 'wyniki-pdf.docx');
+		document.body.appendChild(fileLink);
+		fileLink.click();
+	});

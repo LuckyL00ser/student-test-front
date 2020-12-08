@@ -1,13 +1,13 @@
 <template>
 	<div>
-		<h1>List user-group-subject</h1>
+		<h1>Lista studentów powiązanych z przedmiotami</h1>
 		<router-link
 			v-if="$store.getters.userRole == 'ROLE_TEACHER'"
 			tag="button"
 			class="btn-primary rounded"
 			:to="{ name: 'AddUserGroupSubject' }"
 		>
-			Dodaj user-group-subject
+			Przypisz studenta
 		</router-link>
 		<UserGroupSubjectList :data="userGroupSubjects" :loading="loading">
 			<template v-slot:actions="{ data }">

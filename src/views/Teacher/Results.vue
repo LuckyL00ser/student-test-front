@@ -1,13 +1,15 @@
 <template>
 	<div>
 		<h2>Wyniki</h2>
-		<div class="d-flex align-items-center">Dla przedmiotu:
-			<b-checkbox class=" mx-2" v-model="all">pokaż wszystkie</b-checkbox>
-			<SubjectSelector class="col-6" v-model="selectedSubjectId" :disabled="all" @subjectIDs="assignTeacherSubjects"/>
+		<div class="d-flex flex-column mb-4">
+			Dla przedmiotu:
+			<b-checkbox class=" ml-4" v-model="all">pokaż wszystkie</b-checkbox>
+			<SubjectSelector class=" ml-4 col-6" v-model="selectedSubjectId" :disabled="all" @subjectIDs="assignTeacherSubjects"/>
 		</div>
 		<div class="my-3" v-if="!all && selectedSubjectId">
 			<b-btn class="mr-2" @click="getExcel(selectedSubjectId)">Pobierz wyniki w Excelu</b-btn>
-			<b-btn variant="success" @click="getPDF(selectedSubjectId)">Pobierz wyniki w PDF</b-btn>
+			<b-btn class="mr-2" variant="success" @click="getPDF(selectedSubjectId)">Pobierz wyniki w PDF</b-btn>
+			<b-btn variant="info" @click="getDOCX(selectedSubjectId)">Pobierz wyniki w DOCX</b-btn>
 		</div>
 		<b-radio  value="all" v-model="onlyMarked">Wszystkie</b-radio>
 		<b-radio  value="marked_only" v-model="onlyMarked">Tylko ocenione</b-radio>
@@ -20,7 +22,7 @@
 import { getAllResults } from '../../api/resultAPI';
 import ResultsList from '../../components/Results/ResultsList';
 import SubjectSelector from '../../components/Subjects/SubjectSelector';
-import {getExcel,getPDF} from '../../api/resultAPI';
+import {getExcel,getPDF,getDOCX} from '../../api/resultAPI';
 
 export default {
 	name: 'Results',
@@ -57,6 +59,7 @@ export default {
 	methods:{
 		getExcel: getExcel,
 		getPDF: getPDF,
+		getDOCX: getDOCX,
 		async getResults() {
 			this.loading = true;
 			try {

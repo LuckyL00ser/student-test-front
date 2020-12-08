@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<h1>Dodaj user-group-subject</h1>
+		<h1>Przypisz studenta</h1>
 		<UserGroupSubjectForm />
 	</div>
 </template>
