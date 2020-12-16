@@ -17,9 +17,6 @@
 					<b-btn variant="success" squared @click="logout">
 						Wyloguj
 					</b-btn>
-					<b-btn variant="success" squared @click="setRole">
-						Zmien role
-					</b-btn>
 				</template>
 			</b-navbar-nav>
 		</b-collapse>

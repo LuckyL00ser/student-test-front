@@ -8,13 +8,27 @@
 		:busy="loading"
 	>
 		<template v-slot:cell(generateTest)="data">
-			<router-link :to="{name: 'EditTest',params: {testID:data.item.generateTest.test.id}}">{{data.item.generateTest.test.name}}</router-link>
+			<router-link
+				:to="{
+					name: 'EditTest',
+					params: { testID: data.item.generateTest.test.id },
+				}"
+				>{{ data.item.generateTest.test.name }}</router-link
+			>
 		</template>
 		<template v-slot:cell(actions)="data">
-			<router-link :to="{name:'GenerateTestDetails',params: {generateTestId:data.item.generateTest.id}}" v-if="data.item.mark">
+			<router-link
+				:to="{
+					name: 'GenerateTestDetails',
+					params: { generateTestId: data.item.generateTest.id },
+				}"
+			>
 				Zobacz odpowiedzi
 			</router-link>
-			<router-link :to="{name:'RateTest',params: {resultId:data.item.id}}" v-else>
+			<router-link
+				:to="{ name: 'RateTest', params: { resultId: data.item.id } }"
+				v-if="$store.getters.userRole === 'ROLE_TEACHER'"
+			>
 				Oceń test
 			</router-link>
 		</template>
@@ -39,7 +53,7 @@ export default {
 				{
 					label: 'Użytkownik',
 					key: 'user',
-					formatter: item=>`${item.name} ${item.lastname}`,
+					formatter: item => `${item.name} ${item.lastname}`,
 					sortable: true,
 				},
 				{
@@ -49,11 +63,11 @@ export default {
 				},
 				{
 					label: 'Ocena',
-					key: 'mark'
+					key: 'mark',
 				},
 				{
 					label: 'Punkty',
-					key: 'points'
+					key: 'points',
 				},
 				// {
 				// 	label: 'Czy poprawiał?',
@@ -62,13 +76,12 @@ export default {
 				// },
 				{
 					key: 'actions',
-					label: 'Akcje'
-				}
+					label: 'Akcje',
+				},
 			],
 		};
 	},
-	methods: {
-	},
+	methods: {},
 };
 </script>
 

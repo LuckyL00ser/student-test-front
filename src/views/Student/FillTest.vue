@@ -45,7 +45,7 @@
 							</b-col>
 							<b-col class="col-12 col-lg-6  h-100 pb-2">
 								<ul v-if="question.type != 'TextQuestion'">
-									<li v-for="(answer) in question.answerList" :key="answer.id">
+									<li v-for="answer in question.answerList" :key="answer.id">
 										<b-radio
 											:name="question.id.toString()"
 											v-if="question.type == 'SingleChoiceQuestion'"
@@ -106,17 +106,23 @@ export default {
 		try {
 			const test = await getTest(this.$route.params.testID);
 			this.test = test.data;
-			const questions = await createGenerateTest(this.$route.params.testID,test.fullPoints)
+			const questions = await createGenerateTest(
+				this.$route.params.testID,
+				this.$store.state.user.id,
+				test.fullPoints,
+			);
 			this.questions = questions.data;
 			this.questions.forEach(x => {
-				x.answerList.forEach(a=>a.correct=false)
-				if(x.type==='TextQuestion'){
-					x.answerList = [{
-						id: null,
-						correct: true,
-						answer:'',
-						taskId:x.id
-					}]
+				x.answerList.forEach(a => (a.correct = false));
+				if (x.type === 'TextQuestion') {
+					x.answerList = [
+						{
+							id: null,
+							correct: true,
+							answer: '',
+							taskId: x.id,
+						},
+					];
 				}
 			});
 
@@ -144,7 +150,10 @@ export default {
 				await sendTestAnswers(
 					JSON.stringify(
 						this.questions.reduce(
-							(acc, item) => [...acc, ...item.answerList.filter(x=>x.correct)],
+							(acc, item) => [
+								...acc,
+								...item.answerList.filter(x => x.correct),
+							],
 							[],
 						),
 					),
@@ -179,5 +188,6 @@ ul {
 }
 img {
 	max-height: 280px;
+	max-width: 300px;
 }
 </style>

@@ -60,12 +60,10 @@ export default {
 				let response = null;
 				if (this.$route.name == 'StudentSubjects')
 					response = await getStudentSubjects(this.$store.state.user.id);
-				else if (this.$route.name == 'TeacherSubjects')
-				{
+				else if (this.$route.name == 'TeacherSubjects') {
 					response = await getTeacherSubjects(this.$store.state.user.id);
 					console.log(response);
-				}
-				else response = await getAllSubjects();
+				} else response = await getAllSubjects();
 
 				this.subjects = response.data;
 			} catch (e) {

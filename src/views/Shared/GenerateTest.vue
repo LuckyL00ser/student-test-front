@@ -2,15 +2,20 @@
 	<div>
 		<h2>Zobacz odpowiedzi</h2>
 		<div v-if="generateTest">
-<!--			<p>-->
-<!--				Użytkownik:-->
-<!--				<a :href="`mailto:${result.user.email}`"-->
-<!--				>{{ result.user.name }} {{ result.user.lastname }}</a-->
-<!--				>-->
-<!--			</p>-->
+			<!--			<p>-->
+			<!--				Użytkownik:-->
+			<!--				<a :href="`mailto:${result.user.email}`"-->
+			<!--				>{{ result.user.name }} {{ result.user.lastname }}</a-->
+			<!--				>-->
+			<!--			</p>-->
 			<p>Test: {{ generateTest.test.name }}</p>
 			<b-card>
-				<QuestionResult v-for="(task,index) in tasks" :key="index" :question-result="task"  :disabled="true"/>
+				<QuestionResult
+					v-for="(task, index) in tasks"
+					:key="index"
+					:question-result="task"
+					:disabled="true"
+				/>
 			</b-card>
 		</div>
 	</div>
@@ -28,7 +33,7 @@ export default {
 		return {
 			generateTest: {},
 			generateTestId: this.$route.params.generateTestId,
-			tasks: []
+			tasks: [],
 		};
 	},
 	mounted() {
@@ -38,7 +43,10 @@ export default {
 		async getGenerateTest() {
 			this.loading = true;
 			try {
-				let [generateTest,generateTasks] =  await Promise.all([getGenerateTest(this.generateTestId),getGenerateTaskByGenerateTestId(this.generateTestId)])
+				let [generateTest, generateTasks] = await Promise.all([
+					getGenerateTest(this.generateTestId),
+					getGenerateTaskByGenerateTestId(this.generateTestId),
+				]);
 				this.generateTest = generateTest.data;
 				this.tasks = generateTasks.data;
 			} catch (e) {

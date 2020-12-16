@@ -9,9 +9,18 @@
 		>
 			Stwórz nowy
 		</router-link>
-		<div class="d-flex flex-column mb-4" v-if="$store.getters.userRole == 'ROLE_TEACHER'">Dla przedmiotu:
+		<div
+			class="d-flex flex-column mb-4"
+			v-if="$store.getters.userRole == 'ROLE_TEACHER'"
+		>
+			Dla przedmiotu:
 			<b-checkbox class=" ml-4" v-model="all">pokaż wszystkie</b-checkbox>
-			<SubjectSelector class="ml-4 col-6" v-model="selectedSubjectId" :disabled="all" @subjectIDs="assignTeacherSubjects"/>
+			<SubjectSelector
+				class="ml-4 col-6"
+				v-model="selectedSubjectId"
+				:disabled="all"
+				@subjectIDs="assignTeacherSubjects"
+			/>
 		</div>
 		<TestsList :data="filtered" :loading="loading">
 			<template v-slot:actions="{ data }">
@@ -22,8 +31,8 @@
 					</router-link>
 					<b-btn @click.prevent="deleteTest(data.item.id)">Usuń</b-btn>
 				</template>
-				<template v-else>
-<!--					-if="new Date(data.item.date) < new Date()"-->
+				<template v-else-if="new Date(data.item.date) < new Date()">
+					<!--					-->
 					<router-link
 						:to="{ name: 'FillTest', params: { testID: data.item.id } }"
 						>Zacznij wypelniac</router-link
@@ -47,7 +56,7 @@ export default {
 			loading: false,
 			teacherSubjects: [],
 			all: true,
-			selectedSubjectId: null
+			selectedSubjectId: null,
 		};
 	},
 	mounted() {
@@ -59,16 +68,18 @@ export default {
 				? 'Zarządzaj swoimi testami'
 				: 'Wybierz test który chcesz wypełnić';
 		},
-		filtered (){
-			if(this.$store.getters.userRole=='ROLE_TEACHER'){
-				if(this.all)
-					return this.exampleTests.filter(x=>this.teacherSubjects.includes(x.subject.id))
+		filtered() {
+			if (this.$store.getters.userRole == 'ROLE_TEACHER') {
+				if (this.all)
+					return this.exampleTests.filter(x =>
+						this.teacherSubjects.includes(x.subject.id),
+					);
 				else
-					return this.exampleTests.filter(x=>this.selectedSubjectId == x.subject.id)
-			}
-			else
-				return this.exampleTests;
-		}
+					return this.exampleTests.filter(
+						x => this.selectedSubjectId == x.subject.id,
+					);
+			} else return this.exampleTests;
+		},
 	},
 	methods: {
 		async getTests() {
@@ -91,9 +102,9 @@ export default {
 				this.$store.toast('danger', 'Niepowodzenie ususwania testu' + e);
 			}
 		},
-		assignTeacherSubjects(e){
+		assignTeacherSubjects(e) {
 			this.teacherSubjects = e;
-		}
+		},
 	},
 };
 </script>

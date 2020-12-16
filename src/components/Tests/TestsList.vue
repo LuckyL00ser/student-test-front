@@ -61,7 +61,7 @@ export default {
 				{
 					label: 'Aktywny od',
 					key: 'date',
-					formatter: date => new Date(date).toLocaleString(),
+					formatter: date => new Date(date).toLocaleDateString(),
 				},
 				...this.extraFields,
 				{

@@ -132,7 +132,10 @@ export default {
 				this.$router.push({ name: 'Login' });
 				this.$store.toast('info', 'Zarejestrowano');
 			} catch (e) {
-				this.$store.toast('danger', 'Błąd rejestracji' + e.response.data.message);
+				this.$store.toast(
+					'danger',
+					'Błąd rejestracji' + e.response.data.message,
+				);
 			}
 			this.registering = false;
 		},

@@ -139,10 +139,12 @@ export default {
 					this.task.answerList = this.$refs.single.getAnswers();
 					break;
 				case 'TextQuestion':
-					this.task.answerList = [{
-						correct: true,
-						answer: ''
-					}]
+					this.task.answerList = [
+						{
+							correct: true,
+							answer: '',
+						},
+					];
 					break;
 				default:
 					this.task.answerList = [];

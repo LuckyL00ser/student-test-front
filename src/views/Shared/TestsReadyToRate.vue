@@ -1,7 +1,12 @@
 <template>
 	<div>
 		<h2>Wybierz przedmiot</h2>
-		<b-form-select class="mb-5" v-model="selected" :options="subjects" v-on:change="getTests()">
+		<b-form-select
+			class="mb-5"
+			v-model="selected"
+			:options="subjects"
+			v-on:change="getTests()"
+		>
 		</b-form-select>
 		<h2>Testy które wypełniłeś</h2>
 
@@ -41,7 +46,10 @@ export default {
 		async getTests() {
 			this.loading = true;
 			try {
-				let response = await getTestsByUserAndSubjectId(this.$store.state.user.id, this.selected);
+				let response = await getTestsByUserAndSubjectId(
+					this.$store.state.user.id,
+					this.selected,
+				);
 				this.tests = response.data;
 			} catch (e) {
 				this.$store.toast('danger', e);
@@ -65,7 +73,7 @@ export default {
 			} catch (e) {
 				this.$store.toast('danger', e);
 			}
-		}
+		},
 	},
 };
 </script>

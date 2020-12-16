@@ -10,7 +10,12 @@
 			</p>
 			<p>Test: {{ result.generateTest.test.name }}</p>
 			<b-card>
-				<QuestionResult v-for="(task,index) in tasks" :key="index" :question-result="task" :result-id="resultId"/>
+				<QuestionResult
+					v-for="(task, index) in tasks"
+					:key="index"
+					:question-result="task"
+					:result-id="resultId"
+				/>
 			</b-card>
 		</div>
 	</div>

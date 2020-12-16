@@ -11,5 +11,7 @@ export const getGenerateTest = async id => axios.get(`/generateTest/${id}`);
 // 	axios.get(`/test/subject/${subjectID}`);
 export const getGenerateTestByUser = async userId =>
 	axios.get(`/generateTest/user/${userId}`);
-export const createGenerateTest = async (testId,amount=20) =>
-	axios.get(`/task/generateTest?testId=${testId}&amountTasks=${amount}`);
+export const createGenerateTest = async (testId, userId, amount = 20) =>
+	axios.get(
+		`/task/generateTest?testId=${testId}&amountTasks=${amount}&userId=${userId}`,
+	);

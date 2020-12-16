@@ -28,8 +28,12 @@
 				<b-row>
 					<ValidationProvider rules="required" v-slot="vContext" class="col-6">
 						<b-form-group label="Przedmiot">
-							<SubjectSelector v-model="form.subjectId" v-if="!testID"/>
-							<SubjectSelector v-model="form.subject.id" :disabled="true" v-else/>
+							<SubjectSelector v-model="form.subjectId" v-if="!testID" />
+							<SubjectSelector
+								v-model="form.subject.id"
+								:disabled="true"
+								v-else
+							/>
 
 							<CustomInvalidFeedback :validation-context="vContext" />
 						</b-form-group>
@@ -89,7 +93,7 @@ export default {
 			form: {
 				fullPoints: 1,
 				time: 1,
-				subject: {}
+				subject: {},
 			},
 		};
 	},

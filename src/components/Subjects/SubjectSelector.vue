@@ -41,7 +41,10 @@ export default {
 			try {
 				const response = await getTeacherSubjects(this.$store.state.user.id); //only current teacher subjects
 				this.subjects = response.data;
-				this.$emit('subjectIDs',this.subjects.map(x=>x.id))
+				this.$emit(
+					'subjectIDs',
+					this.subjects.map(x => x.id),
+				);
 			} catch (e) {
 				this.$store.toast('danger', e);
 			}

@@ -40,7 +40,7 @@ export default {
 		return {
 			loading: false,
 			form: {
-				founderId: this.$store.state.user.id
+				founderId: this.$store.state.user.id,
 			},
 		};
 	},
